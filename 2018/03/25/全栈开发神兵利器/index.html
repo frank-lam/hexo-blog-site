@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>全栈开发神兵利器 | Frank&#39;s 技术世界</title>
+  <meta name="description" content="工欲善其事，必先利其器。这里我将推荐开发过程中的提效工具、开发利器、协作工具、文档工具等等。欢迎在 issues#21 中补充你用到过的神兵利器，我将把留言中的工具更新到本文。  一、团队协作 团队协作  Teambition：团队协作工具创导者 有道云协作：企业知识管理与协作平台 tower：深受用户喜爱的团队协作工具  远程   TeamViewer：安全远程访问和支持 TeamViewer">
+<meta name="keywords" content="开发工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="全栈开发神兵利器">
+<meta property="og:url" content="http://www.frankfeekr.cn/2018/03/25/全栈开发神兵利器/index.html">
+<meta property="og:site_name" content="Frank&#39;s 技术世界">
+<meta property="og:description" content="工欲善其事，必先利其器。这里我将推荐开发过程中的提效工具、开发利器、协作工具、文档工具等等。欢迎在 issues#21 中补充你用到过的神兵利器，我将把留言中的工具更新到本文。  一、团队协作 团队协作  Teambition：团队协作工具创导者 有道云协作：企业知识管理与协作平台 tower：深受用户喜爱的团队协作工具  远程   TeamViewer：安全远程访问和支持 TeamViewer">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-10-23T14:22:52.650Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="全栈开发神兵利器">
+<meta name="twitter:description" content="工欲善其事，必先利其器。这里我将推荐开发过程中的提效工具、开发利器、协作工具、文档工具等等。欢迎在 issues#21 中补充你用到过的神兵利器，我将把留言中的工具更新到本文。  一、团队协作 团队协作  Teambition：团队协作工具创导者 有道云协作：企业知识管理与协作平台 tower：深受用户喜爱的团队协作工具  远程   TeamViewer：安全远程访问和支持 TeamViewer">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.frankfeekr.cn/2018/03/25/全栈开发神兵利器/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Frank&#39;s 技术世界" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/frank-lam" target="_blank">
+          <img class="img-circle img-rotate" src="/img/avatar2.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Frank</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">from zero to hero</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou</small><br>
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"> 潜伏在黎明之前，混迹于互联网江湖。</small><br> -->
+
+        <!-- <span class="article-read hidden-xs">
+            <i class="icon icon-eye-fill" aria-hidden="true"></i>
+            <span id="busuanzi_container_page_pv">
+            <span id="busuanzi_value_page_pv">0</span>
+          </span>
+        </span> -->
+
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-location-arrow"></i> frank_lin@whu.edu.cn</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-lintools">
+          <a href="/lintools">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">在线导航</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/tools">
+            
+            <i class="icon icon-shu"></i>
+            
+            <span class="menu-title">四次元ポケット</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-author">
+          <a href="/author">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">作者</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    </nav>
+    <!-- <script type="text/javascript" src="//js.users.51.la/19985869.js"></script> -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?9f90fd773669c197e7a4b7827da87a13";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+      </script>
+      
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <img src="/assets/weixin/qrcode.png" style="width:80%;margin-left:11%;"> <p style="text-align:center;">微信订阅号：全栈开发社区<br>fullstack tutorial developer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/influxdb/">influxdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill-tree/">skill-tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ss/">ss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习宝典/">学习宝典</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发工具/">开发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术世界/">技术世界</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库结构与算法/">数据库结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂文/">杂文</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校招/">校招</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13px;">HTTP</a> <a href="/tags/IDEA/" style="font-size: 13px;">IDEA</a> <a href="/tags/Linux/" style="font-size: 13.5px;">Linux</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/influxdb/" style="font-size: 13px;">influxdb</a> <a href="/tags/skill-tree/" style="font-size: 13px;">skill-tree</a> <a href="/tags/ss/" style="font-size: 13px;">ss</a> <a href="/tags/内网穿透/" style="font-size: 13px;">内网穿透</a> <a href="/tags/前端/" style="font-size: 13px;">前端</a> <a href="/tags/学习宝典/" style="font-size: 13px;">学习宝典</a> <a href="/tags/开发工具/" style="font-size: 13.5px;">开发工具</a> <a href="/tags/技术世界/" style="font-size: 13.5px;">技术世界</a> <a href="/tags/数据库结构与算法/" style="font-size: 13px;">数据库结构与算法</a> <a href="/tags/杂文/" style="font-size: 13.5px;">杂文</a> <a href="/tags/校招/" style="font-size: 14px;">校招</a> <a href="/tags/深度学习/" style="font-size: 13px;">深度学习</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/25/java-regular-group/" class="title">Java 正则表达式的命名捕获组</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-25T08:45:04.000Z" itemprop="datePublished">2021-09-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/05/16/docs-tutorial/" class="title">开发者如何编写优雅的技术文档 —— 手把手教你编写极致的文档</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-05-16T14:05:37.000Z" itemprop="datePublished">2021-05-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/github-speed-up/" class="title">一行命令实现 Github 国内镜像加速</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T13:47:11.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/let-is-encrypt-cerbot-for-https/" class="title">使用 Certbot 为网站签发永久免费的 HTTPS 证书</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T11:01:10.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/31/about-campus-apply/" class="title">关于校招，你必须了解的那些事</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-31T08:19:49.000Z" itemprop="datePublished">2020-05-31</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-团队协作"><span class="toc-number">1.</span> <span class="toc-text">一、团队协作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#团队协作"><span class="toc-number">1.1.</span> <span class="toc-text">团队协作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程"><span class="toc-number">1.2.</span> <span class="toc-text">远程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#笔记备忘"><span class="toc-number">1.3.</span> <span class="toc-text">笔记备忘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-图形与设计"><span class="toc-number">2.</span> <span class="toc-text">二、图形与设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思维导图与原型设计"><span class="toc-number">2.1.</span> <span class="toc-text">思维导图与原型设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘图工具"><span class="toc-number">2.2.</span> <span class="toc-text">绘图工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平面与视频设计"><span class="toc-number">2.3.</span> <span class="toc-text">平面与视频设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-版本控制"><span class="toc-number">3.</span> <span class="toc-text">三、版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#svn"><span class="toc-number">3.1.</span> <span class="toc-text">SVN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git"><span class="toc-number">3.2.</span> <span class="toc-text">Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-工作流"><span class="toc-number">3.3.</span> <span class="toc-text">Git 工作流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-托管平台"><span class="toc-number">3.4.</span> <span class="toc-text">Git 托管平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自主搭建代码托管平台"><span class="toc-number">3.5.</span> <span class="toc-text">自主搭建代码托管平台</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四-全栈开发"><span class="toc-number">4.</span> <span class="toc-text">四、全栈开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库管理-以mysql为例"><span class="toc-number">4.1.</span> <span class="toc-text">数据库管理（以Mysql为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh-连接工具"><span class="toc-number">4.2.</span> <span class="toc-text">SSH 连接工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shell"><span class="toc-number">4.3.</span> <span class="toc-text">SHELL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口调试工具"><span class="toc-number">4.4.</span> <span class="toc-text">接口调试工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#轻量级开发工具"><span class="toc-number">4.5.</span> <span class="toc-text">轻量级开发工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#容器化技术"><span class="toc-number">4.6.</span> <span class="toc-text">容器化技术</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五-文档技术"><span class="toc-number">5.</span> <span class="toc-text">五、文档技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文档平台"><span class="toc-number">5.1.</span> <span class="toc-text">文档平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动文档生成工具"><span class="toc-number">5.2.</span> <span class="toc-text">自动文档生成工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开源框架"><span class="toc-number">5.3.</span> <span class="toc-text">开源框架</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-全栈开发神兵利器" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      全栈开发神兵利器
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/03/25/全栈开发神兵利器/" class="article-date">
+	  <time datetime="2018-03-25T14:30:31.000Z" itemprop="datePublished">2018-03-25 22:30:31</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/开发工具/">开发工具</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/03/25/全栈开发神兵利器/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<!-- <font color=#1a2433>🎯置顶</font> -->
+		<!-- <span>  </span>
+		<i class="icon icon-edit"></i> -->
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：1.8k words</span> -->
+	
+	
+		<span>  </span>
+		<i class="icon icon-time"></i>
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：1.8k words,</span> -->
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">1.8k words, 6 mins</span>
+		<!-- <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读：6 mins</span> -->
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <blockquote>
+<p>工欲善其事，必先利其器。这里我将推荐开发过程中的提效工具、开发利器、协作工具、文档工具等等。欢迎在 <a href="https://github.com/frank-lam/2019_campus_apply/issues/21" target="_blank" rel="noopener">issues#21</a> 中补充你用到过的神兵利器，我将把留言中的工具更新到本文。</p>
+</blockquote>
+<h2 id="一-团队协作">一、团队协作</h2>
+<h3 id="团队协作">团队协作</h3>
+<ul>
+<li><a href="https://www.teambition.com" target="_blank" rel="noopener">Teambition</a>：团队协作工具创导者</li>
+<li><a href="http://co.youdao.com/" target="_blank" rel="noopener">有道云协作</a>：企业知识管理与协作平台</li>
+<li><a href="https://tower.im/" target="_blank" rel="noopener">tower</a>：深受用户喜爱的团队协作工具</li>
+</ul>
+<h3 id="远程">远程</h3>
+<ul>
+<li>
+<p><a href="https://www.teamviewer.com/zhCN/" target="_blank" rel="noopener">TeamViewer</a>：安全远程访问和支持<br>
+TeamViewer 基于最广泛的平台和技术，连接全世界的人、地区和事物。</p>
+</li>
+<li>
+<p><a href="https://sunlogin.oray.com/zh_CN/" target="_blank" rel="noopener">向日葵</a>：简单好用的远程控制软件</p>
+</li>
+<li>
+<p><a href="https://baike.baidu.com/item/mstsc/1329161?fr=aladdin" target="_blank" rel="noopener">mstsc</a>：运行 <code>win+r</code>，输入 <code>mstsc</code>。不要忽略 windows 自带的强大远程桌面连接工具</p>
+<p>注意：真的不要再用 QQ 远程了，真的很卡！</p>
+</li>
+</ul>
+<h3 id="笔记备忘">笔记备忘</h3>
+<ul>
+<li><a href="https://www.yinxiang.com/" target="_blank" rel="noopener">印象笔记</a>：工作必备效率应用</li>
+<li><a href="http://note.youdao.com/" target="_blank" rel="noopener">有道云笔记</a>：网易出品，获得 5000 万用户青睐的笔记软件。提供了 PC 端、移动端、网页端等多端应用，用户可以随时随地对线上资料进行编辑、分享以及协同。</li>
+<li><a href="https://www.rishiqing.com/" target="_blank" rel="noopener">日事清</a>：怕工作进度延误 就用日事清</li>
+<li><a href="https://www.dida365.com/" target="_blank" rel="noopener">滴答清单</a>：一个帮你高效完成任务和规划时间的应用</li>
+</ul>
+<h2 id="二-图形与设计">二、图形与设计</h2>
+<h3 id="思维导图与原型设计">思维导图与原型设计</h3>
+<ul>
+<li><a href="http://www.mindmanager.cc/" target="_blank" rel="noopener">XMind</a>：思维导图，框架图等等，非常推荐。收费软件，部分功能可用</li>
+<li><a href="http://www.mindmanager.cc/" target="_blank" rel="noopener">MindManager</a>：让思考、计划和沟通变得更容易</li>
+<li><a href="http://naotu.baidu.com/" target="_blank" rel="noopener">百度脑图</a>：在线免费脑图，推荐</li>
+<li><a href="https://www.mockplus.cn/features?hmsr=bdtg" target="_blank" rel="noopener">Mockplus</a>：更快、更简单的原型设计</li>
+<li><a href="https://www.axure.com/" target="_blank" rel="noopener">Axure RP</a>：是一款专业的快速原型设计工具</li>
+</ul>
+<h3 id="绘图工具">绘图工具</h3>
+<ul>
+<li><a href="https://products.office.com/zh-cn/visio/flowchart-software" target="_blank" rel="noopener">Visio</a>：微软绘图工具，以直观的方式工作，轻松绘制图表</li>
+<li><a href="http://www.edrawsoft.cn/download-edrawmax.php" target="_blank" rel="noopener">亿图</a>：国产综合图形图表设计软件。类似 visio 的绘图工具（<a href="http://www.zdfans.com/html/17131.html" target="_blank" rel="noopener">完美破解版</a>）</li>
+<li><a href="https://www.processon.com/" target="_blank" rel="noopener">ProcessOn</a>：支持流程图、思维导图、原型图、UML、网络拓扑图、组织结构图等</li>
+<li><a href="https://www.draw.io/" target="_blank" rel="noopener">draw.io</a>：free online diagram software for making flowcharts, process diagrams, org charts, UML, ER and network diagrams</li>
+<li><a href="http://staruml.io/" target="_blank" rel="noopener">StarUML</a>：A sophisticated software modeler for agile and concise modeling（总之 UML 绘图神器）</li>
+</ul>
+<h3 id="平面与视频设计">平面与视频设计</h3>
+<p>只会写代码，设计都不会？本人从事过多年平面设计和视频相关的工作，这里也给大家推荐一些平时做设计的时的一些软件。</p>
+<ul>
+<li><a href="https://www.adobe.com/cn/products/photoshop/free-trial-download.html" target="_blank" rel="noopener">Adobe Photoshop</a>：图像编辑和合成，这个就不用我介绍了吧</li>
+<li><a href="https://www.adobe.com/cn/products/premiere/free-trial-download.html" target="_blank" rel="noopener">Adobe Premiere Pro</a>：视频制作和编辑（业余爱好者可使用绘声绘影）</li>
+<li><a href="https://www.adobe.com/cn/products/aftereffects/free-trial-download.html" target="_blank" rel="noopener">After Effects</a>：电影视觉效果和动态图形</li>
+<li><a href="https://www.adobe.com/cn/products/illustrator/free-trial-download.html" target="_blank" rel="noopener">After Illustrator</a>：矢量图形和插图</li>
+<li><a href="https://www.corel.com/cn/" target="_blank" rel="noopener">Corel DRAW</a>：和 AI 齐名的矢量图制作工具</li>
+</ul>
+<h2 id="三-版本控制">三、版本控制</h2>
+<h3 id="svn">SVN</h3>
+<ul>
+<li>Subversion (SVN) 是一个开源的版本控制系統, 也就是说 Subversion 管理着随时间改变的数据。 这些数据放置在一个中央资料档案库 (repository)  中。 这个档案库很像一个普通的文件服务器, 不过它会记住每一次文件的变动。 这样你就可以把档案恢复到旧的版本, 或是浏览文件的变动历史</li>
+<li>工具下载：<a href="https://tortoisesvn.net/" target="_blank" rel="noopener">tortoiseSVN</a></li>
+<li>学习资源
+<ul>
+<li>文档：<a href="http://www.runoob.com/svn/svn-intro.html" target="_blank" rel="noopener">菜鸟教程 SVN教程</a></li>
+<li>视频：<a href="https://www.imooc.com/learn/109" target="_blank" rel="noopener">版本管理工具介绍—SVN篇</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="git">Git</h3>
+<ul>
+<li>Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目</li>
+<li>工具下载：
+<ul>
+<li><a href="https://www.sourcetreeapp.com/" target="_blank" rel="noopener">SourceTree</a>（推荐★★★）</li>
+<li><a href="https://tortoisegit.org/" target="_blank" rel="noopener">tortoiseGit</a></li>
+<li><a href="https://desktop.github.com/" target="_blank" rel="noopener">GitHub Desktop</a></li>
+</ul>
+</li>
+<li>学习资源
+<ul>
+<li>文档：<a href="http://www.runoob.com/git/git-tutorial.html" target="_blank" rel="noopener">菜鸟教程 Git教程</a></li>
+<li>视频：<a href="https://www.imooc.com/learn/208" target="_blank" rel="noopener">版本管理工具介绍—Git篇</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="git-工作流">Git 工作流</h3>
+<ul>
+<li><a href="Git%E5%B7%A5%E4%BD%9C%E6%B5%81.md">集中式工作流，功能分支工作流， GitFlow 工作流，Forking 工作流，Pull Requests</a></li>
+</ul>
+<h3 id="git-托管平台">Git 托管平台</h3>
+<ul>
+<li><a href="http://www.github.com/" target="_blank" rel="noopener">Github</a>：全球最大的程序员社交网站（同性交友网站）</li>
+<li><a href="https://gitee.com/" target="_blank" rel="noopener">码云</a>：国内比较大的 Git 托管平台。码云专为开发者提供稳定、高效、安全的云端软件开发协作平台。无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发</li>
+<li><a href="https://coding.net/" target="_blank" rel="noopener">CODING</a>：国内 Git 托管平台，Coding，让开发更简单</li>
+</ul>
+<h3 id="自主搭建代码托管平台">自主搭建代码托管平台</h3>
+<ul>
+<li>
+<p><a href="https://www.gitlab.com/" target="_blank" rel="noopener">GitLab</a>：可以使用 GitLab 官方的服务，也提供了开源社区版供团队搭建使用。（推荐使用 Docker 可实现一键自动化搭建）</p>
+</li>
+<li>
+<p><a href="https://gogs.io/" target="_blank" rel="noopener">Gogs</a>：一款极易搭建的自助 Git 服务，通过 Go 语言写的，适合在 Linux 服务器上搭建</p>
+</li>
+<li>
+<p><a href="https://www.visualsvn.com/server/" target="_blank" rel="noopener">VisualSVN</a>：VisualSVN Server allows you to easily install and manage a fully-functional Subversion server on the Windows platform.</p>
+</li>
+<li>
+<p><a href="http://svnadmin.insanefactory.com/" target="_blank" rel="noopener">iF.SVNAdmin</a>：The iF.SVNAdmin application is a web based GUI to your Subversion authorization file. It is based on PHP 5.3 and requires a web server (Apache) to be installed. （通过 PHP 在 Linux 上搭建 SVN 平台，并且有 web 管理页面）</p>
+</li>
+</ul>
+<h2 id="四-全栈开发">四、全栈开发</h2>
+<h3 id="数据库管理-以mysql为例">数据库管理（以Mysql为例）</h3>
+<ul>
+<li><a href="http://www.navicat.com.cn/products/" target="_blank" rel="noopener">Navicat Premium</a>：可以连接所有数据库，配套Navicat也针对不同的数据库有不同的版本，请点击进入官网自行查看，收费软件，需要百度自行破解。</li>
+<li><a href="https://sqlyog.en.softonic.com" target="_blank" rel="noopener">SQLyog</a>：Administrate MySQL Databases With Ease Using a Graphical Interface，免费</li>
+</ul>
+<h3 id="ssh-连接工具">SSH 连接工具</h3>
+<ul>
+<li><a href="https://mobaxterm.mobatek.net/" target="_blank" rel="noopener">MobaXterm</a>（超级推荐，太极客了！而且是免费的）</li>
+<li><a href="http://rj.baidu.com/soft/detail/15201.html" target="_blank" rel="noopener">Xshell 5</a></li>
+<li><a href="http://download.csdn.net/download/u012104219/10209465" target="_blank" rel="noopener">SecureCRT 6.6</a></li>
+<li><a href="https://www.gitkraken.com/git-client" target="_blank" rel="noopener">GitKraken</a></li>
+</ul>
+<p><strong>推荐</strong>：以上三款工具我都使用过，目前已经弃用 Xshell 和 SecureCRT，推荐使用 MobaXterm</p>
+<h3 id="shell">SHELL</h3>
+<ul>
+<li><a href="https://ohmyz.sh/" target="_blank" rel="noopener">Oh My Zsh - a delightful &amp; open source framework for Z-Shell</a></li>
+</ul>
+<h3 id="接口调试工具">接口调试工具</h3>
+<ul>
+<li>抓包工具1 | <a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener">Fiddler</a>：The free web debugging proxy（很优秀的抓包工具，目前似乎只支持 windows 用户）</li>
+<li>抓包工具2 | <a href="https://www.charlesproxy.com/" target="_blank" rel="noopener">charles</a>：Charles is an HTTP proxy / HTTP monitor / Reverse Proxy that enables a developer to view all of the HTTP and SSL / HTTPS traffic between their machine and the Internet.（MacOS的必备抓包工具）</li>
+<li>接口调试 | <a href="https://www.getpostman.com/" target="_blank" rel="noopener">postman</a>：Developers use Postman to build<br>
+modern software for the API-first world.</li>
+</ul>
+<h3 id="轻量级开发工具">轻量级开发工具</h3>
+<ul>
+<li><a href="https://www.sublimetext.com/" target="_blank" rel="noopener">Sublime Text</a>：A sophisticated text editor for code, markup and prose</li>
+<li><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VS Code</a>：Free. Open source. Runs everywhere.（非常推荐，后起之秀，有丰富的社区插件，超级推荐使用，推荐安装 One Dark Pro Theme）</li>
+<li><a href="https://atom.io/" target="_blank" rel="noopener">Atom</a>：A hackable text editor for the 21st Century</li>
+<li><a href="http://brackets.io/" target="_blank" rel="noopener">brackets</a>：A modern, open source text editor that understands web design.（前端神奇）</li>
+<li>三者比较请移步知乎：<a href="https://www.zhihu.com/question/41857899?sort=created" target="_blank" rel="noopener">Atom、Sublime Text、VSCode 三者比较，各有哪些优势和弱势？</a></li>
+</ul>
+<h3 id="容器化技术">容器化技术</h3>
+<ul>
+<li><a href="https://www.docker.com/" target="_blank" rel="noopener">Docker</a>：秒级启动虚拟机容器技术。真正一次编写，到处运行。（一定要学！）</li>
+</ul>
+<h2 id="五-文档技术">五、文档技术</h2>
+<p>在团队协作中必须会涉及到文档交互部分，这里推荐以下几个文档平台和开源项目</p>
+<h3 id="文档平台">文档平台</h3>
+<ul>
+<li><a href="https://www.kancloud.cn/" target="_blank" rel="noopener">看云</a>：专注于文档在线创作、协作和托管（极力推荐，每个文档只有50Mb的免费空间，超过需要收费）</li>
+</ul>
+<h3 id="自动文档生成工具">自动文档生成工具</h3>
+<ul>
+<li><a href="http://apidocjs.com/" target="_blank" rel="noopener">ApiDoc</a>：Inline Documentation for RESTful web APIs，可以通过命令行将代码中的注释生成在线可调试的文档，开发者的福音啊</li>
+<li><a href="https://swagger.io/" target="_blank" rel="noopener">Swagger</a>：The Best APIs are Built with Swagger Tools，在 Java web 项目中用的比较多</li>
+</ul>
+<h3 id="开源框架">开源框架</h3>
+<ul>
+<li><a href="https://www.showdoc.cc/" target="_blank" rel="noopener">ShowDoc</a>：一个非常适合IT团队的在线 API 文档、技术文档工具。使用 PHP 开发的文档框架</li>
+<li><a href="https://www.iminho.me/" target="_blank" rel="noopener">MinDoc</a>：MinDoc 是一款针对IT团队开发的简单好用的文档管理系统</li>
+<li><a href="https://vuepress.vuejs.org/" target="_blank" rel="noopener">vuepress</a>：vue 官方团队的文档解决方案，适合于静态博客或是文档</li>
+<li><a href="https://docsify.js.org/#/zh-cn/" target="_blank" rel="noopener">docsify</a>：类似 gitbook 和 vuepress 的文档解决方案</li>
+<li><a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">hexo</a>：markdown 编写，自动生成静态博客</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.frankfeekr.cn/2018/03/25/全栈开发神兵利器/" title="全栈开发神兵利器" target="_blank" rel="external">http://www.frankfeekr.cn/2018/03/25/全栈开发神兵利器/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/frank-lam" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/avatar2.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/frank-lam" target="_blank"><span class="text-dark">Frank</span><small class="ml-1x">from zero to hero</small></a></h3>
+        <div>潜伏在黎明之前，混迹于互联网江湖。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/04/10/PHP-编程中-符号的作用/" title="PHP 编程中 @ 符号的作用"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/12/04/互联网的一代人/" title="互联网的一代人"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/img/donate/alipay.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/img/donate/wechat.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        
+        <div class="publishby">
+            <!-- <span id="busuanzi_container_site_pv">访问量：<span id="busuanzi_value_site_pv"></span>次</span><br/> -->
+            <!-- frank_lin@whu.edu.cn <br /> -->
+            <!-- fullstack-tutorial -->
+            <!-- <br> -->
+            <iframe style="height: 20px !important;" frameborder="0" scrolling="0" width="120px" height="20px" src="https://ghbtns.com/github-btn.html?user=frank-lam&repo=fullstack-tutorial&type=star&count=true">
+            </iframe><br>
+            <!-- <p id="about_51la">
+                <script type="text/javascript" src="//quote.51.la/q?id=19985869&mb=4"></script>
+            </p> -->
+            <p>
+                <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> </span>
+                <br>
+                <a href="https://beian.miit.gov.cn" target="_blank" style="border-bottom: 1px dashed #ffffffbf;">浙ICP备2021008991号</a>
+            </p>
+            <!-- Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>. -->
+        </div>
+    </div>
+    <script>
+        // setTimeout(function () {
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        // }, 1000);
+
+        do {
+            console.log("loading 51.la");
+        }
+        while (document.getElementById("about_51la").length == 1) {
+            setTimeout(function () {
+                $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+                $('#about_51la a').remove()
+
+            }, 500);
+            // $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+            // $('#about_51la a').remove()
+        }
+        // while ($('#about_51la').length == 1) {
+
+        // }
+
+        // setTimeout(function(){
+        //     console.log($('#about_51la').length);
+        //     if($('#about_51la p')){
+        //         alert("exist");
+        //     }
+        //     else{
+        //         alert("not exist");
+        //     }
+        //     console.log($('#about_51la span'));
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        //  }, 2000);
+
+    </script>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script async src="https://cdn.jsdelivr.net/gh/frank-lam/hexo-blog-site/js/busuanzi.pure.mini.js"></script> -->
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '321c793b57e48017d3d6',
+    clientSecret: '525a416540a4b84efca2e7cdf218edddcd7c2b00',
+    repo: 'hexo-blog-gitalk',
+    owner: 'frank-lam',
+    admin: ['frank-lam'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      if ($(this).hasClass('nofancybox')) return;
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>

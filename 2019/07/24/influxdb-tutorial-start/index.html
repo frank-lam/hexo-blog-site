@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>玩转时序数据库 InfluxDB（一）初体验 | Frank&#39;s 技术世界</title>
+  <meta name="description" content="申明：本文为学习过程中的笔记，在现有的资料基础之上做了学习和整理，非完全原创的。引用资料见文末，参考资料。  官方文档：InfluxDB 1.7 documentation | InfluxData Documentation 一、启程 1. 介绍 InfluxDB 是使用 GO 编写的基于时间序列的数据库，用于存储大量带有时间戳的数据，报错 DevOps 监控，日志数据，应用程序的指标、数据分">
+<meta name="keywords" content="influxdb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转时序数据库 InfluxDB（一）初体验">
+<meta property="og:url" content="http://www.frankfeekr.cn/2019/07/24/influxdb-tutorial-start/index.html">
+<meta property="og:site_name" content="Frank&#39;s 技术世界">
+<meta property="og:description" content="申明：本文为学习过程中的笔记，在现有的资料基础之上做了学习和整理，非完全原创的。引用资料见文末，参考资料。  官方文档：InfluxDB 1.7 documentation | InfluxData Documentation 一、启程 1. 介绍 InfluxDB 是使用 GO 编写的基于时间序列的数据库，用于存储大量带有时间戳的数据，报错 DevOps 监控，日志数据，应用程序的指标、数据分">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-10-23T14:22:52.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="玩转时序数据库 InfluxDB（一）初体验">
+<meta name="twitter:description" content="申明：本文为学习过程中的笔记，在现有的资料基础之上做了学习和整理，非完全原创的。引用资料见文末，参考资料。  官方文档：InfluxDB 1.7 documentation | InfluxData Documentation 一、启程 1. 介绍 InfluxDB 是使用 GO 编写的基于时间序列的数据库，用于存储大量带有时间戳的数据，报错 DevOps 监控，日志数据，应用程序的指标、数据分">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.frankfeekr.cn/2019/07/24/influxdb-tutorial-start/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Frank&#39;s 技术世界" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/frank-lam" target="_blank">
+          <img class="img-circle img-rotate" src="/img/avatar2.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Frank</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">from zero to hero</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou</small><br>
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"> 潜伏在黎明之前，混迹于互联网江湖。</small><br> -->
+
+        <!-- <span class="article-read hidden-xs">
+            <i class="icon icon-eye-fill" aria-hidden="true"></i>
+            <span id="busuanzi_container_page_pv">
+            <span id="busuanzi_value_page_pv">0</span>
+          </span>
+        </span> -->
+
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-location-arrow"></i> frank_lin@whu.edu.cn</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-lintools">
+          <a href="/lintools">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">在线导航</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/tools">
+            
+            <i class="icon icon-shu"></i>
+            
+            <span class="menu-title">四次元ポケット</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-author">
+          <a href="/author">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">作者</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    </nav>
+    <!-- <script type="text/javascript" src="//js.users.51.la/19985869.js"></script> -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?9f90fd773669c197e7a4b7827da87a13";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+      </script>
+      
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <img src="/assets/weixin/qrcode.png" style="width:80%;margin-left:11%;"> <p style="text-align:center;">微信订阅号：全栈开发社区<br>fullstack tutorial developer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/influxdb/">influxdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill-tree/">skill-tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ss/">ss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习宝典/">学习宝典</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发工具/">开发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术世界/">技术世界</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库结构与算法/">数据库结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂文/">杂文</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校招/">校招</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13px;">HTTP</a> <a href="/tags/IDEA/" style="font-size: 13px;">IDEA</a> <a href="/tags/Linux/" style="font-size: 13.5px;">Linux</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/influxdb/" style="font-size: 13px;">influxdb</a> <a href="/tags/skill-tree/" style="font-size: 13px;">skill-tree</a> <a href="/tags/ss/" style="font-size: 13px;">ss</a> <a href="/tags/内网穿透/" style="font-size: 13px;">内网穿透</a> <a href="/tags/前端/" style="font-size: 13px;">前端</a> <a href="/tags/学习宝典/" style="font-size: 13px;">学习宝典</a> <a href="/tags/开发工具/" style="font-size: 13.5px;">开发工具</a> <a href="/tags/技术世界/" style="font-size: 13.5px;">技术世界</a> <a href="/tags/数据库结构与算法/" style="font-size: 13px;">数据库结构与算法</a> <a href="/tags/杂文/" style="font-size: 13.5px;">杂文</a> <a href="/tags/校招/" style="font-size: 14px;">校招</a> <a href="/tags/深度学习/" style="font-size: 13px;">深度学习</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/25/java-regular-group/" class="title">Java 正则表达式的命名捕获组</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-25T08:45:04.000Z" itemprop="datePublished">2021-09-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/05/16/docs-tutorial/" class="title">开发者如何编写优雅的技术文档 —— 手把手教你编写极致的文档</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-05-16T14:05:37.000Z" itemprop="datePublished">2021-05-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/github-speed-up/" class="title">一行命令实现 Github 国内镜像加速</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T13:47:11.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/let-is-encrypt-cerbot-for-https/" class="title">使用 Certbot 为网站签发永久免费的 HTTPS 证书</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T11:01:10.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/31/about-campus-apply/" class="title">关于校招，你必须了解的那些事</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-31T08:19:49.000Z" itemprop="datePublished">2020-05-31</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-启程"><span class="toc-number">1.</span> <span class="toc-text">一、启程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1. 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-关键概念"><span class="toc-number">1.2.</span> <span class="toc-text">2. 关键概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本概念"><span class="toc-number">1.2.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特有概念"><span class="toc-number">1.2.2.</span> <span class="toc-text">特有概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-端口服务"><span class="toc-number">1.3.</span> <span class="toc-text">3. 端口服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-安装"><span class="toc-number">2.</span> <span class="toc-text">二、安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-基于-linux-centos-安装"><span class="toc-number">2.1.</span> <span class="toc-text">1. 基于 Linux CentOS 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-基于-docker-安装"><span class="toc-number">2.2.</span> <span class="toc-text">2. 基于 Docker 安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-可视化客户端安装"><span class="toc-number">3.</span> <span class="toc-text">三、可视化客户端安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四-客户端命令操作-基本语法"><span class="toc-number">4.</span> <span class="toc-text">四、客户端命令操作（基本语法）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数据库操作"><span class="toc-number">4.1.</span> <span class="toc-text">1. 数据库操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建"><span class="toc-number">4.1.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除"><span class="toc-number">4.1.2.</span> <span class="toc-text">删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用"><span class="toc-number">4.1.3.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据表和数据操作"><span class="toc-number">4.2.</span> <span class="toc-text">2. 数据表和数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#显示所有表"><span class="toc-number">4.2.1.</span> <span class="toc-text">显示所有表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新建表-写数据"><span class="toc-number">4.2.2.</span> <span class="toc-text">新建表（写数据）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除表"><span class="toc-number">4.2.3.</span> <span class="toc-text">删除表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读数据"><span class="toc-number">4.2.4.</span> <span class="toc-text">读数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改和删除数据"><span class="toc-number">4.2.5.</span> <span class="toc-text">修改和删除数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-series-操作"><span class="toc-number">4.3.</span> <span class="toc-text">3. series 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-用户操作"><span class="toc-number">4.4.</span> <span class="toc-text">4. 用户操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五-http-api-操作"><span class="toc-number">5.</span> <span class="toc-text">五、HTTP API 操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#接口地址"><span class="toc-number">5.1.</span> <span class="toc-text">接口地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#状态码"><span class="toc-number">5.2.</span> <span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-创建数据库"><span class="toc-number">5.3.</span> <span class="toc-text">1. 创建数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-写入数据"><span class="toc-number">5.4.</span> <span class="toc-text">2. 写入数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-写入多个数据点"><span class="toc-number">5.5.</span> <span class="toc-text">3. 写入多个数据点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-从文件导入数据库"><span class="toc-number">5.6.</span> <span class="toc-text">4. 从文件导入数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六-数据保存策略-retention-policies"><span class="toc-number">6.</span> <span class="toc-text">六、数据保存策略（Retention Policies）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看"><span class="toc-number">6.1.</span> <span class="toc-text">1. 查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-创建"><span class="toc-number">6.2.</span> <span class="toc-text">2. 创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-修改"><span class="toc-number">6.3.</span> <span class="toc-text">3. 修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-删除"><span class="toc-number">6.4.</span> <span class="toc-text">4. 删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七-常用函数"><span class="toc-number">7.</span> <span class="toc-text">七、常用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-聚合类函数"><span class="toc-number">7.1.</span> <span class="toc-text">1. 聚合类函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-count-函数"><span class="toc-number">7.1.1.</span> <span class="toc-text">1）COUNT() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-distinct-函数"><span class="toc-number">7.1.2.</span> <span class="toc-text">2）DISTINCT() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-mean-函数"><span class="toc-number">7.1.3.</span> <span class="toc-text">3）MEAN() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-median-函数"><span class="toc-number">7.1.4.</span> <span class="toc-text">4）MEDIAN() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-spread-函数"><span class="toc-number">7.1.5.</span> <span class="toc-text">5）SPREAD() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-sum-函数"><span class="toc-number">7.1.6.</span> <span class="toc-text">6）SUM() 函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-选择类函数"><span class="toc-number">7.2.</span> <span class="toc-text">2. 选择类函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-top-函数"><span class="toc-number">7.2.1.</span> <span class="toc-text">1）TOP() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-bottom-函数"><span class="toc-number">7.2.2.</span> <span class="toc-text">2）BOTTOM() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-first-函数"><span class="toc-number">7.2.3.</span> <span class="toc-text">3）FIRST() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-last-函数"><span class="toc-number">7.2.4.</span> <span class="toc-text">4）LAST() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-max-函数"><span class="toc-number">7.2.5.</span> <span class="toc-text">5）MAX() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-min-函数"><span class="toc-number">7.2.6.</span> <span class="toc-text">6）MIN() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-percentile-函数"><span class="toc-number">7.2.7.</span> <span class="toc-text">7）PERCENTILE() 函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-变换类函数"><span class="toc-number">7.3.</span> <span class="toc-text">3. 变换类函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-derivative-函数"><span class="toc-number">7.3.1.</span> <span class="toc-text">1）DERIVATIVE() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-difference-函数"><span class="toc-number">7.3.2.</span> <span class="toc-text">2）DIFFERENCE() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-elapsed-函数"><span class="toc-number">7.3.3.</span> <span class="toc-text">3）ELAPSED() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-moving-average-函数"><span class="toc-number">7.3.4.</span> <span class="toc-text">4）MOVING_AVERAGE() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-non-negative-derivative-函数"><span class="toc-number">7.3.5.</span> <span class="toc-text">5）NON_NEGATIVE_DERIVATIVE() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-stddev-函数"><span class="toc-number">7.3.6.</span> <span class="toc-text">6）STDDEV() 函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八-连续查询"><span class="toc-number">8.</span> <span class="toc-text">八、连续查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">8.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目的"><span class="toc-number">8.2.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作"><span class="toc-number">8.3.</span> <span class="toc-text">操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他说明"><span class="toc-number">8.4.</span> <span class="toc-text">其他说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#九-再谈连续查询"><span class="toc-number">9.</span> <span class="toc-text">九、再谈连续查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连续查询语法"><span class="toc-number">9.1.</span> <span class="toc-text">连续查询语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定连续查询的时间范围"><span class="toc-number">9.2.</span> <span class="toc-text">指定连续查询的时间范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定连续查询的执行频次"><span class="toc-number">9.3.</span> <span class="toc-text">指定连续查询的执行频次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同时指定连续查询的范围和频次"><span class="toc-number">9.4.</span> <span class="toc-text">同时指定连续查询的范围和频次</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">10.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-influxdb-tutorial-start" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      玩转时序数据库 InfluxDB（一）初体验
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/07/24/influxdb-tutorial-start/" class="article-date">
+	  <time datetime="2019-07-24T02:31:37.000Z" itemprop="datePublished">2019-07-24 10:31:37</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/influxdb/">influxdb</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/07/24/influxdb-tutorial-start/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<!-- <font color=#1a2433>🎯置顶</font> -->
+		<!-- <span>  </span>
+		<i class="icon icon-edit"></i> -->
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：6.5k words</span> -->
+	
+	
+		<span>  </span>
+		<i class="icon icon-time"></i>
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：6.5k words,</span> -->
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">6.5k words, 30 mins</span>
+		<!-- <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读：30 mins</span> -->
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <blockquote>
+<p>申明：本文为学习过程中的笔记，在现有的资料基础之上做了学习和整理，非完全原创的。引用资料见文末，参考资料。</p>
+</blockquote>
+<p>官方文档：<a href="https://docs.influxdata.com/influxdb/v1.7/" target="_blank" rel="noopener">InfluxDB 1.7 documentation | InfluxData Documentation</a></p>
+<h2 id="一-启程">一、启程</h2>
+<h3 id="1-介绍">1. 介绍</h3>
+<p>InfluxDB 是使用 GO 编写的基于时间序列的数据库，用于存储大量带有时间戳的数据，报错 DevOps 监控，日志数据，应用程序的指标、数据分析数据等等。通过 InfluxDB 自动保存数据，你不需要删除和清理，只需要定义一段时间 DB 会帮你自动清理。</p>
+<p>InfluxDB 提供三种操作方式：</p>
+<ul>
+<li>
+<p>客户端命令行方式</p>
+</li>
+<li>
+<p>HTTP API 接口</p>
+</li>
+<li>
+<p>各语言 API 库</p>
+</li>
+</ul>
+<h3 id="2-关键概念">2. 关键概念</h3>
+<h4 id="基本概念">基本概念</h4>
+<p>InfluxDB 和传统数据库（如：MySQL）的一些区别</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">InfluxDB</th>
+<th style="text-align:center">传统数据库中的概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">database</td>
+<td style="text-align:center">数据库</td>
+</tr>
+<tr>
+<td style="text-align:center">measurement</td>
+<td style="text-align:center">数据库中的表</td>
+</tr>
+<tr>
+<td style="text-align:center">points</td>
+<td style="text-align:center">表里面的一行数据</td>
+</tr>
+</tbody>
+</table>
+<h4 id="特有概念">特有概念</h4>
+<ol>
+<li>
+<p>tag–标签，在 InfluxDB 中，tag 是一个非常重要的部分，表名+tag 一起作为数据库的索引，是“key-value”的形式</p>
+</li>
+<li>
+<p>field–数据，field 主要是用来存放数据的部分，也是“key-value”的形式</p>
+</li>
+<li>
+<p>timestamp–时间戳，作为时序型数据库，时间戳是 InfluxDB 中最重要的部分，在插入数据时可以自己指定也可留空让系统指定</p>
+<p><strong>说明</strong>：<em>在插入新数据时，tag、field 和 timestamp 之间用空格分隔</em></p>
+</li>
+<li>
+<p>series–序列，所有在数据库中的数据，都需要通过图表来展示，而这个 series 表示这个表里面的数据，可以在图表上画成几条线。具体可以通过 <code>SHOW SERIES FROM &quot;表名&quot;</code> 进行查询</p>
+</li>
+<li>
+<p>Retention policy–数据保留策略，可以定义数据保留的时长，每个数据库可以有多个数据保留策略，但只能有一个默认策略</p>
+</li>
+<li>
+<p>Point–点，表示每个表里某个时刻的某个条件下的一个 field 的数据，因为体现在图表上就是一个点，于是将其称为 point。Point 由时间戳（time）、数据（field）、标签（tags）组成</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Point 属性</th>
+<th style="text-align:center">传统数据库中的概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">time</td>
+<td style="text-align:center">每个数据记录时间，是数据库中的主索引 (会自动生成)</td>
+</tr>
+<tr>
+<td style="text-align:center">fields</td>
+<td style="text-align:center">表中的列（没有索引的属性）也就是记录的值：温度， 湿度</td>
+</tr>
+<tr>
+<td style="text-align:center">tags</td>
+<td style="text-align:center">表中的索引：地区，海拔</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-端口服务">3. 端口服务</h3>
+<ul>
+<li>8083：Web admin 管理服务的端口, <a href="http://localhost:8083" target="_blank" rel="noopener">http://localhost:8083</a></li>
+<li>8086：HTTP API 的端口</li>
+<li>8088：集群端口 (目前还不是很清楚, 配置在全局的 bind-address，默认不配置就是开启的)</li>
+</ul>
+<h2 id="二-安装">二、安装</h2>
+<h3 id="1-基于-linux-centos-安装">1. 基于 Linux CentOS 安装</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.influxdata.com/influxdb/releases/influxdb-0.13.0.x86_64.rpm</span><br><span class="line">sudo yum localinstall influxdb-0.13.0.x86_64.rpm</span><br></pre></td></tr></table></figure>
+<h3 id="2-基于-docker-安装">2. 基于 Docker 安装</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8083:8083 -p8086:8086 --expose 8090 --expose 8099 --name influxDbService influxdb</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>-d：容器在后台运行</p>
+</li>
+<li>
+<p>-p：将容器内端口映射到宿主机端口，格式为 宿主机端口:容器内端口；8083 是 influxdb 的 web 管理工具端口，8086 是 influxdb 的 HTTP API 端口</p>
+</li>
+<li>
+<p>–expose：可以让容器接受外部传入的数据</p>
+</li>
+<li>
+<p>–name：容器名称  此处 influxDbService 则是启动后的容器名</p>
+</li>
+<li>
+<p>最后是镜像名称 influxdb，镜像名可以通过 docker images 查看； 通过 tag 区分启镜像版本</p>
+</li>
+<li>
+<p>若不加 tag 则启动的是最新版本 latest</p>
+</li>
+</ul>
+<h2 id="三-可视化客户端安装">三、可视化客户端安装</h2>
+<p>客户端为绿色版，下载解压打开即可。下载地址：<a href="https://github.com/CymaticLabs/InfluxDBStudio/releases" target="_blank" rel="noopener">Releases · CymaticLabs/InfluxDBStudio</a></p>
+<ul>
+<li>这里也提供 InfluxDB Studio 的使用说明，供大家参考：<a href="https://cloud.tencent.com/developer/article/1444098" target="_blank" rel="noopener">windows 下 influxDB 操作工具 InfluxDBStudio </a></li>
+</ul>
+<h2 id="四-客户端命令操作-基本语法">四、客户端命令操作（基本语法）</h2>
+<h3 id="1-数据库操作">1. 数据库操作</h3>
+<h4 id="创建">创建</h4>
+<p>CREATE DATABASE {NAME};</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; create database frank</span><br><span class="line">&gt; show databases</span><br><span class="line">name: databases</span><br><span class="line">name</span><br><span class="line"><span class="comment">----</span></span><br><span class="line">_internal</span><br><span class="line">telegraf</span><br><span class="line">frank</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这时候我们发现数据库有一个表“_internal”，其实这个表是 influxdb 数据库的一些指标存储库。有点类似 mysql 数据库的 mysql 库。</li>
+</ul>
+<h4 id="删除">删除</h4>
+<p>DROP DATABASE {NAME};</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; drop database frank</span><br></pre></td></tr></table></figure>
+<h4 id="使用">使用</h4>
+<p>DROP {DB};</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use frank</span><br><span class="line">Using database frank</span><br></pre></td></tr></table></figure>
+<h3 id="2-数据表和数据操作">2. 数据表和数据操作</h3>
+<p>建库的操作可以发现非常类似于 MySQL 下的操作。而在 InfluxDB 下没有细分的表的概念，InfluxDB 下的表在插入数据库的时候自动会创建。可以通过 <code>show measurements</code> 命令查看所有的表，这个类似于 MySQL 下的<code>show tables</code></p>
+<h4 id="显示所有表">显示所有表</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; show measurements</span><br><span class="line">name: measurements</span><br><span class="line">name</span><br><span class="line"><span class="comment">----</span></span><br><span class="line">cpu</span><br><span class="line">temperature</span><br></pre></td></tr></table></figure>
+<h4 id="新建表-写数据">新建表（写数据）</h4>
+<p>标准格式，注意在写数据的时候如果不添加时间戳，系统会默认添加一个时间。InfluxDB 中没有显式的新建表的语句，只能通过 insert 数据的方式来建立新表。</p>
+<ul>
+<li>语法格式</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> &lt;measurement&gt;[,&lt;tag-<span class="keyword">key</span>&gt;=&lt;tag-<span class="keyword">value</span>&gt;...] &lt;<span class="keyword">field</span>-<span class="keyword">key</span>&gt;=&lt;<span class="keyword">field</span>-<span class="keyword">value</span>&gt;[,&lt;field2-<span class="keyword">key</span>&gt;=&lt;field2-<span class="keyword">value</span>&gt;...] [unix-nano-<span class="built_in">timestamp</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>示例</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; INSERT cpu,host=serverA,region=us_west value=0.64</span><br><span class="line"></span><br><span class="line">&gt; INSERT temperature,machine=unit42,type=assembly external=25,internal=37 1434067467000000000</span><br></pre></td></tr></table></figure>
+<h4 id="删除表">删除表</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; drop measurement disk_free</span><br><span class="line">&gt; show measurements</span><br><span class="line">name: measurements</span><br><span class="line"><span class="comment">------------------</span></span><br><span class="line">name</span><br><span class="line">weather</span><br></pre></td></tr></table></figure>
+<h4 id="读数据">读数据</h4>
+<p>查询语句与 SQL 一样，不用过多的学习</p>
+<ul>
+<li>查询数据</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT "host", "region", "value" FROM "cpu"</span><br><span class="line">name: cpu</span><br><span class="line">time                host    region  value</span><br><span class="line"><span class="comment">----                ----    ------  -----</span></span><br><span class="line">1563895618490964877 serverA us_west 0.64</span><br></pre></td></tr></table></figure>
+<ul>
+<li>每个表输出一行（支持 Go 语言的正则表达式、支持类似于 MySQL 中的 limit 语句）</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT * FROM /.*/ LIMIT 1</span><br><span class="line">name: cpu</span><br><span class="line">time                external host    internal machine region  type value</span><br><span class="line"><span class="comment">----                -------- ----    -------- ------- ------  ---- -----</span></span><br><span class="line">1563895618490964877          serverA                  us_west      0.64</span><br><span class="line"></span><br><span class="line">name: temperature</span><br><span class="line">time                external host internal machine region type     value</span><br><span class="line"><span class="comment">----                -------- ---- -------- ------- ------ ----     -----</span></span><br><span class="line">1434067467000000000 25            37       unit42         assembly</span><br></pre></td></tr></table></figure>
+<h4 id="修改和删除数据">修改和删除数据</h4>
+<p>InfluxDB 属于时序数据库，没有提供修改和删除数据的方法。</p>
+<p>但是删除可以通过 InfluxDB 的数据保存策略（Retention Policies）来实现</p>
+<p>update 更新语句没有，不过有 alter 命令，在 influxdb 中，删除操作用和更新基本不用到 。在针对数据保存策略方面，有一个特殊的删除方式，这个后面再提。</p>
+<h3 id="3-series-操作">3. series 操作</h3>
+<p>series 表示这个表里面的数据，可以在图表上画成几条线，series 主要通过 tags 排列组合算出来。</p>
+<p>我们可以查询表的 series，如下所示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> show series from mem</span></span><br><span class="line">key</span><br><span class="line">mem,host=ResourcePool-0246-billing07</span><br><span class="line">mem,host=billing07</span><br></pre></td></tr></table></figure>
+<h3 id="4-用户操作">4. 用户操作</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 显示用户</span></span><br><span class="line">SHOW USERS</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建用户</span></span><br><span class="line">CREATE USER "username" WITH PASSWORD 'password'</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建管理员权限的用户</span></span><br><span class="line">CREATE USER "username" WITH PASSWORD 'password' WITH ALL PRIVILEGES</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除用户</span></span><br><span class="line">DROP USER "username"</span><br></pre></td></tr></table></figure>
+<p>influxdb 的权限设置比较简单，只有读、写、ALL 几种。</p>
+<h2 id="五-http-api-操作">五、HTTP API 操作</h2>
+<h3 id="接口地址">接口地址</h3>
+<table>
+<thead>
+<tr>
+<th>接口路径</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/debug/pprof</td>
+<td>debug 排查问题使用</td>
+</tr>
+<tr>
+<td>/debug/requests</td>
+<td>使用这个请求监听最近是否有请求</td>
+</tr>
+<tr>
+<td>/debug/vars</td>
+<td>查询 influxdb 收集到静态信息</td>
+</tr>
+<tr>
+<td>/ping</td>
+<td>检测 influxdb 状态</td>
+</tr>
+<tr>
+<td>/query</td>
+<td>查询数据接口（同时可以创建 ku）</td>
+</tr>
+<tr>
+<td>/write</td>
+<td>写入数据接口（一个已存在数据库）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="状态码">状态码</h3>
+<ul>
+<li>2xx：服务请求正常</li>
+<li>4xx：代表请求语法有问题</li>
+<li>5xx：服务端出问题，导致超时等故障</li>
+</ul>
+<h3 id="1-创建数据库">1. 创建数据库</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE mydb"</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Request-Id: 5edd88a8-ef90-11e8-83cd-a0999b0f94e3</span><br><span class="line">X-Influxdb-Build: OSS</span><br><span class="line">X-Influxdb-Version: 1.7.0~n201811230800</span><br><span class="line">X-Request-Id: 5edd88a8-ef90-11e8-83cd-a0999b0f94e3</span><br><span class="line">Date: Sat, 24 Nov 2018 02:26:38 GMT</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">&#123;"results":[&#123;"statement_id":0&#125;]&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-写入数据">2. 写入数据</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">curl -i  -XPOST 'http://localhost:8086/write?db=mydb' --data-binary 'cpu_load_short,host=server01,region=us-west value=0.65 1434055564000000000'</span><br><span class="line">HTTP/1.1 204 No Content</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Request-Id: 1ae386c4-ef91-11e8-83d8-a0999b0f94e3</span><br><span class="line">X-Influxdb-Build: OSS</span><br><span class="line">X-Influxdb-Version: 1.7.0~n201811230800</span><br><span class="line">X-Request-Id: 1ae386c4-ef91-11e8-83d8-a0999b0f94e3</span><br><span class="line">Date: Sat, 24 Nov 2018 02:31:53 GMT</span><br></pre></td></tr></table></figure>
+<h3 id="3-写入多个数据点">3. 写入多个数据点</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary 'cpu_load_short,host=server02 value=0.67</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>cpu_load_short,host=server02,region=us-west value=0.55 1422568543702900257<br>
+cpu_load_short,direction=in,host=server01,region=us-west value=2.0 1422568543702900257’<br>
+HTTP/1.1 204 No Content<br>
+Content-Type: application/json<br>
+Request-Id: 574f52a0-ef91-11e8-83d9-a0999b0f94e3<br>
+X-Influxdb-Build: OSS<br>
+X-Influxdb-Version: 1.7.0~n201811230800<br>
+X-Request-Id: 574f52a0-ef91-11e8-83d9-a0999b0f94e3<br>
+Date: Sat, 24 Nov 2018 02:33:34 GMT</p>
+</blockquote>
+<h3 id="4-从文件导入数据库">4. 从文件导入数据库</h3>
+<p>从文件导入时候建议不要超过 5000 条，如果超过请对文件进行切割，因为 http api 的接口 5s 会超时，请求数据过多会导致数据无法确认是否成功。<br>
+文件 cpu_data.txt 内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cpu_load_short,host=server02 value=111</span><br><span class="line">cpu_load_short,host=server02,region=us-west value=0.222 1543027130702900257</span><br><span class="line">cpu_load_short,direction=in,host=server01,region=us-west value=111.222 1543027129702900257</span><br><span class="line">curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary @cpu_data.txt</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>HTTP/1.1 204 No Content<br>
+Content-Type: application/json<br>
+Request-Id: 4b2ed710-ef92-11e8-83e3-a0999b0f94e3<br>
+X-Influxdb-Build: OSS<br>
+X-Influxdb-Version: 1.7.0~n201811230800<br>
+X-Request-Id: 4b2ed710-ef92-11e8-83e3-a0999b0f94e3<br>
+Date: Sat, 24 Nov 2018 02:40:24 GMT</p>
+</blockquote>
+<h2 id="六-数据保存策略-retention-policies">六、数据保存策略（Retention Policies）</h2>
+<p>InfluxDB 每秒可以处理成千上万条数据，要将这些数据全部保存下来会占用大量的存储空间，有时我们可能并不需要将所有历史数据进行存储。InfluxDB 没有提供直接删除 Points 的方法，但是它提供了 Retention Policies，用来让我们自定义数据的保留时间。</p>
+<h3 id="1-查看">1. 查看</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW RETENTION POLICIES ON <span class="string">"testDB"</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-创建">2. 创建</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE RETENTION POLICY <span class="string">"rp_name"</span> ON <span class="string">"db_name"</span> DURATION 30d REPLICATION 1 DEFAULT</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ol>
+<li>rp_name：策略名</li>
+<li>db_name：具体的数据库名</li>
+<li>30d：保存 30 天，30 天之前的数据将被删除<br>
+它具有各种时间参数，比如：h（小时），w（星期）</li>
+<li>REPLICATION 1：副本个数，这里填 1 就可以了</li>
+<li>DEFAULT 设为默认的策略</li>
+</ol>
+<h3 id="3-修改">3. 修改</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER RETENTION POLICY <span class="string">"rp_name"</span> ON db_name<span class="string">" DURATION 3w DEFAULT</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-删除">4. 删除</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP RETENTION POLICY <span class="string">"rp_name"</span> ON <span class="string">"db_name"</span></span><br></pre></td></tr></table></figure>
+<h2 id="七-常用函数">七、常用函数</h2>
+<p>InfluxDB 提供了很多的有用的函数，这里列举了常用的三个维度函数，Use InfluxQL functions to aggregate, select, and transform data.</p>
+<table>
+<thead>
+<tr>
+<th>Aggregations</th>
+<th>Selectors</th>
+<th>Transformations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#count" target="_blank" rel="noopener">COUNT()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#bottom" target="_blank" rel="noopener">BOTTOM()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#ceiling" target="_blank" rel="noopener">CEILING()</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#distinct" target="_blank" rel="noopener">DISTINCT()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#first" target="_blank" rel="noopener">FIRST()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#derivative" target="_blank" rel="noopener">DERIVATIVE()</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#integral" target="_blank" rel="noopener">INTEGRAL()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#last" target="_blank" rel="noopener">LAST()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#difference" target="_blank" rel="noopener">DIFFERENCE()</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#mean" target="_blank" rel="noopener">MEAN()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#max" target="_blank" rel="noopener">MAX()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#elapsed" target="_blank" rel="noopener">ELAPSED()</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#median" target="_blank" rel="noopener">MEDIAN()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#min" target="_blank" rel="noopener">MIN()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#floor" target="_blank" rel="noopener">FLOOR()</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#spread" target="_blank" rel="noopener">SPREAD()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#percentile" target="_blank" rel="noopener">PERCENTILE()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#histogram" target="_blank" rel="noopener">HISTOGRAM()</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#sum" target="_blank" rel="noopener">SUM()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#top" target="_blank" rel="noopener">TOP()</a></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#moving-average" target="_blank" rel="noopener">MOVING_AVERAGE()</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#non-negative-derivative" target="_blank" rel="noopener">NON_NEGATIVE_DERIVATIVE()</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#stddev" target="_blank" rel="noopener">STDDEV()</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-聚合类函数">1. 聚合类函数</h3>
+<h4 id="1-count-函数">1）COUNT() 函数</h4>
+<p>返回一个（field）字段中的非空值的数量。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(&lt;field_key&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT COUNT(water_level) FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           count</span><br><span class="line">1970-01-01T00:00:00Z     15258</span><br></pre></td></tr></table></figure>
+<p>说明 water_level 这个字段在 h2o_feet 表中共有 15258 条数据。</p>
+<p>注意：InfluxDB 中的函数如果没有指定时间的话，会默认以 epoch 0 (<code>1970-01-01T00:00:00Z</code>) 作为时间。</p>
+<p>可以在 where 中加入时间条件，如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT COUNT(water_level) FROM h2o_feet WHERE time &gt;= '2015-08-18T00:00:00Z' AND time &lt; '2015-09-18T17:00:00Z' GROUP BY time(4d)</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           count</span><br><span class="line">2015-08-17T00:00:00Z     1440</span><br><span class="line">2015-08-21T00:00:00Z     1920</span><br><span class="line">2015-08-25T00:00:00Z     1920</span><br><span class="line">2015-08-29T00:00:00Z     1920</span><br><span class="line">2015-09-02T00:00:00Z     1915</span><br><span class="line">2015-09-06T00:00:00Z     1920</span><br><span class="line">2015-09-10T00:00:00Z     1920</span><br><span class="line">2015-09-14T00:00:00Z     1920</span><br><span class="line">2015-09-18T00:00:00Z     335</span><br></pre></td></tr></table></figure>
+<h4 id="2-distinct-函数">2）DISTINCT() 函数</h4>
+<p>返回一个字段（field）的唯一值。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span>(&lt;field_key&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>使用示例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT DISTINCT("level description") FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           distinct</span><br><span class="line">1970-01-01T00:00:00Z     between 6 and 9 feet</span><br><span class="line">1970-01-01T00:00:00Z     below 3 feet</span><br><span class="line">1970-01-01T00:00:00Z     between 3 and 6 feet</span><br><span class="line">1970-01-01T00:00:00Z     at or greater than 9 feet</span><br></pre></td></tr></table></figure>
+<p>这个例子显示 level description 这个字段共有四个值，然后将其显示了出来，时间为默认时间。</p>
+<h4 id="3-mean-函数">3）MEAN() 函数</h4>
+<p>返回一个字段（field）中的值的算术平均值（平均值）。字段类型必须是长整型或 float64。</p>
+<p>语法格式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> MEAN(&lt;field_key&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>使用示例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT MEAN(water_level) FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           mean</span><br><span class="line">1970-01-01T00:00:00Z     4.286791371454075</span><br></pre></td></tr></table></figure>
+<p>说明 water_level 字段的平均值为<code>4.286791371454075</code>，时间为默认时间，当然，你也可以加入 where 条件。</p>
+<h4 id="4-median-函数">4）MEDIAN() 函数</h4>
+<p>从单个字段（field）中的排序值返回中间值（中位数）。字段值的类型必须是长整型或 float64 格式。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MEDIAN</span>(&lt;field_key&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>使用示例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT MEDIAN(water_level) from h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           median</span><br><span class="line">1970-01-01T00:00:00Z     4.124</span><br></pre></td></tr></table></figure>
+<p>说明表中 water_level 字段的中位数是 4.124</p>
+<h4 id="5-spread-函数">5）SPREAD() 函数</h4>
+<p>返回字段的最小值和最大值之间的差值。数据的类型必须是长整型或 float64。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SPREAD(&lt;field_key&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>使用示例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT SPREAD(water_level) FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                            spread</span><br><span class="line">1970-01-01T00:00:00Z      10.574</span><br></pre></td></tr></table></figure>
+<h4 id="6-sum-函数">6）SUM() 函数</h4>
+<p>返回一个字段中的所有值的和。字段的类型必须是长整型或 float64。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(&lt;field_key&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT SUM(water_level) FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           sum</span><br><span class="line">1970-01-01T00:00:00Z     67777.66900000002</span><br></pre></td></tr></table></figure>
+<p>此语句计算出了 h2o_feet 表中 所有 water_level 字段的和。</p>
+<h3 id="2-选择类函数">2. 选择类函数</h3>
+<h4 id="1-top-函数">1）TOP() 函数</h4>
+<p>作用：返回一个字段中最大的 N 个值，字段类型必须是长整型或 float64 类型。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TOP( &lt;field_key&gt;[,&lt;tag_key(s)&gt;],&lt;N&gt; )[,&lt;tag_key(s)&gt;|&lt;field_key(s)&gt;] [INTO_clause] FROM_clause [WHERE_clause] [GROUP_BY_clause] [ORDER_BY_clause] [LIMIT_clause] [OFFSET_clause] [SLIMIT_clause] [SOFFSET_clause]</span><br></pre></td></tr></table></figure>
+<p>使用示例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT TOP("water_level",3) FROM "h2o_feet"</span><br><span class="line"></span><br><span class="line">name: h2o_feet</span><br><span class="line">time                   top</span><br><span class="line"><span class="comment">----                   ---</span></span><br><span class="line">2015-08-29T07:18:00Z   9.957</span><br><span class="line">2015-08-29T07:24:00Z   9.964</span><br><span class="line">2015-08-29T07:30:00Z   9.954</span><br></pre></td></tr></table></figure>
+<p>这个例子返回表中 water_level 字段中最大的三个值。</p>
+<h4 id="2-bottom-函数">2）BOTTOM() 函数</h4>
+<p>作用：返回一个字段中最小的 N 个值。字段类型必须是长整型或 float64 类型。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> BOTTOM(&lt;field_key&gt;[,&lt;tag_keys&gt;],&lt;N&gt;)[,&lt;tag_keys&gt;] <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>使用示例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT BOTTOM(water_level,3) FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           bottom</span><br><span class="line">2015-08-29T14:30:00Z     -0.61</span><br><span class="line">2015-08-29T14:36:00Z     -0.591</span><br><span class="line">2015-08-30T15:18:00Z     -0.594</span><br></pre></td></tr></table></figure>
+<p>这个例子返回表中 water_level 字段中最小的三个值。</p>
+<p>也可将关联 tag 放在一起查询，但如果 tag 值少于 N 的值，则返回的值的个数只会取 tag 中字段值少的那个。</p>
+<p>如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT BOTTOM(water_level,location,3) FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           bottom     location</span><br><span class="line">2015-08-29T10:36:00Z     -0.243     santa_monica</span><br><span class="line">2015-08-29T14:30:00Z     -0.61      coyote_creek</span><br></pre></td></tr></table></figure>
+<p>语句取最小的三个值，然而结果只返回了 2 个值，因为 location 这个 tag 只有 两个取值。</p>
+<h4 id="3-first-函数">3）FIRST() 函数</h4>
+<p>作用：返回一个字段中最老的取值。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">FIRST</span>(&lt;field_key&gt;)[,&lt;tag_key(s)&gt;] <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT FIRST(water_level) FROM h2o_feet WHERE location = 'santa_monica'</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           first</span><br><span class="line">2015-08-18T00:00:00Z     2.064</span><br></pre></td></tr></table></figure>
+<p>这个语句返回了 在 location 为 santa_monica 条件下，最旧的那个 water_level 字段的取值和时间。</p>
+<h4 id="4-last-函数">4）LAST() 函数</h4>
+<p>作用：返回一个字段中最新的取值。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LAST</span>(&lt;field_key&gt;)[,&lt;tag_key(s)&gt;] <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT LAST(water_level),location FROM h2o_feet WHERE time &gt;= '2015-08-18T00:42:00Z' and time &lt;= '2015-08-18T00:54:00Z'</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           last      location</span><br><span class="line">2015-08-18T00:54:00Z     6.982     coyote_creek</span><br></pre></td></tr></table></figure>
+<h4 id="5-max-函数">5）MAX() 函数</h4>
+<p>作用：返回一个字段中的最大值。该字段类型必须是长整型，float64，或布尔类型。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(&lt;field_key&gt;)[,&lt;tag_key(s)&gt;] <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT MAX(water_level),location FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           max       location</span><br><span class="line">2015-08-29T07:24:00Z     9.964     coyote_creek</span><br></pre></td></tr></table></figure>
+<h4 id="6-min-函数">6）MIN() 函数</h4>
+<p>作用：返回一个字段中的最小值。该字段类型必须是长整型，float64，或布尔类型。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(&lt;field_key&gt;)[,&lt;tag_key(s)&gt;] <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT MIN(water_level),location FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                          min       location</span><br><span class="line">2015-08-29T14:30:00Z    -0.61     coyote_creek</span><br></pre></td></tr></table></figure>
+<h4 id="7-percentile-函数">7）PERCENTILE() 函数</h4>
+<p>作用：返回排序值排位为 N 的百分值。字段的类型必须是长整型或 float64。</p>
+<p>百分值是介于 100 到 0 之间的整数或浮点数，包括 100。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> PERCENTILE(&lt;field_key&gt;, &lt;N&gt;)[,&lt;tag_key(s)&gt;] <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT PERCENTILE(water_level,5),location FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                      percentile     location</span><br><span class="line">2015-08-28T12:06:00Z      1.122             santa_monica</span><br></pre></td></tr></table></figure>
+<p>就是将 water_level 字段按照不同的 location 求百分比，然后取第五位数据。</p>
+<h3 id="3-变换类函数">3. 变换类函数</h3>
+<h4 id="1-derivative-函数">1）DERIVATIVE() 函数</h4>
+<p>作用：返回一个字段在一个 series 中的变化率。</p>
+<p>InfluxDB 会计算按照时间进行排序的字段值之间的差异，并将这些结果转化为单位变化率。其中，单位可以指定，默认为 1s。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DERIVATIVE(&lt;field_key&gt;, [&lt;unit&gt;]) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>其中，<code>unit</code>取值可以为以下几种：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">u <span class="comment">--microseconds</span></span><br><span class="line">s <span class="comment">--seconds</span></span><br><span class="line">m <span class="comment">--minutes</span></span><br><span class="line">h <span class="comment">--hours</span></span><br><span class="line">d <span class="comment">--days</span></span><br><span class="line">w <span class="comment">--weeks</span></span><br></pre></td></tr></table></figure>
+<p>DERIVATIVE() 函数还可以在 GROUP BY time() 的条件下与聚合函数嵌套使用，格式如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DERIVATIVE(AGGREGATION_FUNCTION(&lt;field_key&gt;),[&lt;unit&gt;]) <span class="keyword">FROM</span> &lt;measurement_name&gt; <span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt; <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(&lt;aggregation_interval&gt;)</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<p>假设 location = santa_monica 条件下数据有以下几条：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           water_level</span><br><span class="line">2015-08-18T00:00:00Z     2.064</span><br><span class="line">2015-08-18T00:06:00Z     2.116</span><br><span class="line">2015-08-18T00:12:00Z     2.028</span><br><span class="line">2015-08-18T00:18:00Z     2.126</span><br><span class="line">2015-08-18T00:24:00Z     2.041</span><br><span class="line">2015-08-18T00:30:00Z     2.051</span><br></pre></td></tr></table></figure>
+<p>计算每一秒的变化率：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT DERIVATIVE(water_level) FROM h2o_feet WHERE location = 'santa_monica' LIMIT 5</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           derivative</span><br><span class="line">2015-08-18T00:06:00Z     0.00014444444444444457</span><br><span class="line">2015-08-18T00:12:00Z     -0.00024444444444444465</span><br><span class="line">2015-08-18T00:18:00Z     0.0002722222222222218</span><br><span class="line">2015-08-18T00:24:00Z     -0.000236111111111111</span><br><span class="line">2015-08-18T00:30:00Z     2.777777777777842e-05</span><br></pre></td></tr></table></figure>
+<p>第一行数据的计算公式为<code>(2.116 - 2.064) / (360s / 1s)</code></p>
+<p>计算每六分钟的变化率</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT DERIVATIVE(water_level,6m) FROM h2o_feet WHERE location = 'santa_monica' LIMIT 5</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           derivative</span><br><span class="line">2015-08-18T00:06:00Z     0.052000000000000046</span><br><span class="line">2015-08-18T00:12:00Z     -0.08800000000000008</span><br><span class="line">2015-08-18T00:18:00Z     0.09799999999999986</span><br><span class="line">2015-08-18T00:24:00Z     -0.08499999999999996</span><br><span class="line">2015-08-18T00:30:00Z     0.010000000000000231</span><br></pre></td></tr></table></figure>
+<p>第一行数据的计算过程如下：<code>(2.116 - 2.064) / (6m / 6m)</code></p>
+<p>计算每 12 分钟的变化率：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT DERIVATIVE(water_level,12m) FROM h2o_feet WHERE location = 'santa_monica' LIMIT 5</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           derivative</span><br><span class="line">2015-08-18T00:06:00Z     0.10400000000000009</span><br><span class="line">2015-08-18T00:12:00Z     -0.17600000000000016</span><br><span class="line">2015-08-18T00:18:00Z     0.19599999999999973</span><br><span class="line">2015-08-18T00:24:00Z     -0.16999999999999993</span><br><span class="line">2015-08-18T00:30:00Z     0.020000000000000462</span><br></pre></td></tr></table></figure>
+<p>第一行数据计算过程为：<code>(2.116 - 2.064 / (6m / 12m)</code></p>
+<p>计算每 12 分钟最大值的变化率</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT DERIVATIVE(MAX(water_level)) FROM h2o_feet WHERE location = 'santa_monica' AND time &gt;= '2015-08-18T00:00:00Z' AND time &lt; '2015-08-18T00:36:00Z' GROUP BY time(12m)</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           derivative</span><br><span class="line">2015-08-18T00:12:00Z     0.009999999999999787</span><br><span class="line">2015-08-18T00:24:00Z     -0.07499999999999973</span><br></pre></td></tr></table></figure>
+<p>这个函数功能非常多，也非常复杂，更多对于此功能的详细解释请看官网：<a href="https://www.linuxdaxue.com/wp-content/themes/template/inc/go.php?url=https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#derivative" target="_blank" rel="noopener">https://docs.influxdata.com/influxdb/v0.13/query_language/functions/#derivative</a></p>
+<h4 id="2-difference-函数">2）DIFFERENCE() 函数</h4>
+<p>作用：返回一个字段中连续的时间值之间的差异。字段类型必须是长整型或 float64。</p>
+<p>最基本的语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DIFFERENCE</span>(&lt;field_key&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>与 GROUP BY time() 以及其他嵌套函数一起使用的语法格式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DIFFERENCE</span>(&lt;<span class="keyword">function</span>&gt;(&lt;field_key&gt;)) <span class="keyword">FROM</span> &lt;measurement_name&gt; <span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt; <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(&lt;time_interval&gt;)</span><br></pre></td></tr></table></figure>
+<p>其中，函数可以包含以下几个：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">COUNT</span>(), <span class="selector-tag">MEAN</span>(), <span class="selector-tag">MEDIAN</span>(), <span class="selector-tag">SUM</span>(), <span class="selector-tag">FIRST</span>(), <span class="selector-tag">LAST</span>(), <span class="selector-tag">MIN</span>(), <span class="selector-tag">MAX</span>(), 和 <span class="selector-tag">PERCENTILE</span>()</span><br></pre></td></tr></table></figure>
+<p>使用示例</p>
+<p>例子中使用的源数据如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT water_level FROM h2o_feet WHERE location='santa_monica' AND time &gt;= '2015-08-18T00:00:00Z' and time &lt;= '2015-08-18T00:36:00Z'</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                            water_level</span><br><span class="line">2015-08-18T00:00:00Z      2.064</span><br><span class="line">2015-08-18T00:06:00Z      2.116</span><br><span class="line">2015-08-18T00:12:00Z      2.028</span><br><span class="line">2015-08-18T00:18:00Z      2.126</span><br><span class="line">2015-08-18T00:24:00Z      2.041</span><br><span class="line">2015-08-18T00:30:00Z      2.051</span><br><span class="line">2015-08-18T00:36:00Z      2.067</span><br></pre></td></tr></table></figure>
+<p>计算<code>water_level</code>间的差异：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT DIFFERENCE(water_level) FROM h2o_feet WHERE location='santa_monica' AND time &gt;= '2015-08-18T00:00:00Z' and time &lt;= '2015-08-18T00:36:00Z'</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                            difference</span><br><span class="line">2015-08-18T00:06:00Z      0.052000000000000046</span><br><span class="line">2015-08-18T00:12:00Z      -0.08800000000000008</span><br><span class="line">2015-08-18T00:18:00Z      0.09799999999999986</span><br><span class="line">2015-08-18T00:24:00Z      -0.08499999999999996</span><br><span class="line">2015-08-18T00:30:00Z      0.010000000000000231</span><br><span class="line">2015-08-18T00:36:00Z      0.016000000000000014</span><br></pre></td></tr></table></figure>
+<p>数据类型都为 float 类型。</p>
+<h4 id="3-elapsed-函数">3）ELAPSED() 函数</h4>
+<p>作用：返回一个字段在连续的时间间隔间的差异，间隔单位可选，默认为 1 纳秒。</p>
+<p>单位可选项如下：</p>
+<table>
+<thead>
+<tr>
+<th>Units</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ns</td>
+<td>nanoseconds (1 billionth of a second)</td>
+</tr>
+<tr>
+<td>u or µ</td>
+<td>microseconds (1 millionth of a second)</td>
+</tr>
+<tr>
+<td>ms</td>
+<td>milliseconds (1 thousandth of a second)</td>
+</tr>
+<tr>
+<td>s</td>
+<td>second</td>
+</tr>
+<tr>
+<td>m</td>
+<td>minute</td>
+</tr>
+<tr>
+<td>h</td>
+<td>hour</td>
+</tr>
+<tr>
+<td>d</td>
+<td>day</td>
+</tr>
+<tr>
+<td>w</td>
+<td>week</td>
+</tr>
+</tbody>
+</table>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ELAPSED(&lt;field_key&gt;, &lt;unit&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<p>计算 h2o_feet 字段在纳秒间隔下的差异。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT ELAPSED(water_level) FROM h2o_feet WHERE location = 'santa_monica' AND time &gt;= '2015-08-18T00:00:00Z' and time &lt;= '2015-08-18T00:24:00Z'</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                            elapsed</span><br><span class="line">2015-08-18T00:06:00Z      360000000000</span><br><span class="line">2015-08-18T00:12:00Z      360000000000</span><br><span class="line">2015-08-18T00:18:00Z      360000000000</span><br><span class="line">2015-08-18T00:24:00Z      360000000000</span><br></pre></td></tr></table></figure>
+<p>在一分钟间隔下的差异率：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT ELAPSED(water_level,1m) FROM h2o_feet WHERE location = 'santa_monica' AND time &gt;= '2015-08-18T00:00:00Z' and time &lt;= '2015-08-18T00:24:00Z'</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                            elapsed</span><br><span class="line">2015-08-18T00:06:00Z      6</span><br><span class="line">2015-08-18T00:12:00Z      6</span><br><span class="line">2015-08-18T00:18:00Z      6</span><br><span class="line">2015-08-18T00:24:00Z      6</span><br></pre></td></tr></table></figure>
+<p>注意：如果设置的时间间隔比字段数据间的时间间隔更大时，则函数会返回 0，如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT ELAPSED(water_level,1h) FROM h2o_feet WHERE location = 'santa_monica' AND time &gt;= '2015-08-18T00:00:00Z' and time &lt;= '2015-08-18T00:24:00Z'</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                            elapsed</span><br><span class="line">2015-08-18T00:06:00Z      0</span><br><span class="line">2015-08-18T00:12:00Z      0</span><br><span class="line">2015-08-18T00:18:00Z      0</span><br><span class="line">2015-08-18T00:24:00Z      0</span><br></pre></td></tr></table></figure>
+<h4 id="4-moving-average-函数">4）MOVING_AVERAGE() 函数</h4>
+<p>作用：返回一个连续字段值的移动平均值，字段类型必须是长整形或者 float64 类型。</p>
+<p>语法：</p>
+<p>基本语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> MOVING_AVERAGE(&lt;field_key&gt;,&lt;<span class="keyword">window</span>&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>与其他函数和 GROUP BY time() 语句一起使用时的语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> MOVING_AVERAGE(&lt;<span class="keyword">function</span>&gt;(&lt;field_key&gt;),&lt;<span class="keyword">window</span>&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; <span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt; <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(&lt;time_interval&gt;)</span><br></pre></td></tr></table></figure>
+<p>此函数可以和以下函数一起使用：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">COUNT</span>(), <span class="selector-tag">MEAN</span>(),<span class="selector-tag">MEDIAN</span>(), <span class="selector-tag">SUM</span>(), <span class="selector-tag">FIRST</span>(), <span class="selector-tag">LAST</span>(), <span class="selector-tag">MIN</span>(), <span class="selector-tag">MAX</span>(), <span class="selector-tag">and</span> <span class="selector-tag">PERCENTILE</span>().</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT water_level FROM h2o_feet WHERE location = 'santa_monica' AND time &gt;= '2015-08-18T00:00:00Z' and time &lt;= '2015-08-18T00:36:00Z'</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                            water_level</span><br><span class="line">2015-08-18T00:00:00Z      2.064</span><br><span class="line">2015-08-18T00:06:00Z      2.116</span><br><span class="line">2015-08-18T00:12:00Z      2.028</span><br><span class="line">2015-08-18T00:18:00Z      2.126</span><br><span class="line">2015-08-18T00:24:00Z      2.041</span><br><span class="line">2015-08-18T00:30:00Z      2.051</span><br><span class="line">2015-08-18T00:36:00Z      2.067</span><br></pre></td></tr></table></figure>
+<h4 id="5-non-negative-derivative-函数">5）NON_NEGATIVE_DERIVATIVE() 函数</h4>
+<p>作用：返回在一个 series 中的一个字段中值的变化的非负速率。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> NON_NEGATIVE_DERIVATIVE(&lt;field_key&gt;, [&lt;unit&gt;]) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>其中 unit 取值可以为以下几个：</p>
+<p>Valid time specifications for <code>unit</code> are:</p>
+<ul>
+<li><code>u</code> microseconds</li>
+<li><code>s</code> seconds</li>
+<li><code>m</code> minutes</li>
+<li><code>h</code> hours</li>
+<li><code>d</code> days</li>
+<li><code>w</code> weeks</li>
+</ul>
+<p>与聚合类函数放在一起使用时的语法如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> NON_NEGATIVE_DERIVATIVE(AGGREGATION_FUNCTION(&lt;field_key&gt;),[&lt;unit&gt;]) <span class="keyword">FROM</span> &lt;measurement_name&gt; <span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt; <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(&lt;aggregation_interval&gt;)</span><br></pre></td></tr></table></figure>
+<p>此函数示例请参阅：<a href="https://www.linuxdaxue.com/influxdb-study-influxdb-transformations-funcitons.html#title-0" target="_blank" rel="noopener">DERIVATIVE()</a>``函数</p>
+<h4 id="6-stddev-函数">6）STDDEV() 函数</h4>
+<p>作用：返回一个字段中的值的标准偏差。值的类型必须是长整型或 float64 类型。</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">STDDEV</span>(&lt;field_key&gt;) <span class="keyword">FROM</span> &lt;measurement_name&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] [<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;<span class="keyword">stuff</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT STDDEV(water_level) FROM h2o_feet</span><br><span class="line">name: h2o_feet</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">time                           stddev</span><br><span class="line">1970-01-01T00:00:00Z     2.279144584196145</span><br></pre></td></tr></table></figure>
+<p>示例 2：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT STDDEV(water_level) FROM h2o_feet WHERE time &gt;= '2015-08-18T00:00:00Z' and time &lt; '2015-09-18T12:06:00Z' GROUP BY time(1w), location</span><br><span class="line">name: h2o_feet</span><br><span class="line">tags: location = coyote_creek</span><br><span class="line">time                           stddev</span><br><span class="line"><span class="comment">----                           ------</span></span><br><span class="line">2015-08-13T00:00:00Z     2.2437263080193985</span><br><span class="line">2015-08-20T00:00:00Z     2.121276150144719</span><br><span class="line">2015-08-27T00:00:00Z     3.0416122170786215</span><br><span class="line">2015-09-03T00:00:00Z     2.5348065025435207</span><br><span class="line">2015-09-10T00:00:00Z     2.584003954882673</span><br><span class="line">2015-09-17T00:00:00Z     2.2587514836274414</span><br><span class="line"></span><br><span class="line">name: h2o_feet</span><br><span class="line">tags: location = santa_monica</span><br><span class="line">time                           stddev</span><br><span class="line"><span class="comment">----                           ------</span></span><br><span class="line">2015-08-13T00:00:00Z     1.11156344587553</span><br><span class="line">2015-08-20T00:00:00Z     1.0909849279082366</span><br><span class="line">2015-08-27T00:00:00Z     1.9870116180096962</span><br><span class="line">2015-09-03T00:00:00Z     1.3516778450902067</span><br><span class="line">2015-09-10T00:00:00Z     1.4960573811500588</span><br><span class="line">2015-09-17T00:00:00Z     1.075701669442093</span><br></pre></td></tr></table></figure>
+<h2 id="八-连续查询">八、连续查询</h2>
+<h3 id="定义">定义</h3>
+<p>InfluxDB 的连续查询是在数据库中自动定时启动的一组语句，语句中必须包含 <code>SELECT</code>关键词和<code>GROUP BY time()</code>关键词。</p>
+<p>InfluxDB 会将查询结果放在指定的数据表中。</p>
+<h3 id="目的">目的</h3>
+<p>使用连续查询是最优的降低采样率的方式，连续查询和存储策略搭配使用将会大大降低 InfluxDB 的系统占用量。</p>
+<p>而且使用连续查询后，数据会存放到指定的数据表中，这样就为以后统计不同精度的数据提供了方便。</p>
+<h3 id="操作">操作</h3>
+<p>只有管理员用户可以操作连续查询。</p>
+<p>1）新建连续查询</p>
+<p>新建连续查询的语法如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> CONTINUOUS <span class="keyword">QUERY</span> &lt;cq_name&gt; <span class="keyword">ON</span> &lt;database_name&gt; </span><br><span class="line">[RESAMPLE [EVERY &lt;<span class="built_in">interval</span>&gt;] [<span class="keyword">FOR</span> &lt;<span class="built_in">interval</span>&gt;]] </span><br><span class="line"><span class="keyword">BEGIN</span> <span class="keyword">SELECT</span> &lt;<span class="keyword">function</span>&gt;(&lt;<span class="keyword">stuff</span>&gt;)[,&lt;<span class="keyword">function</span>&gt;(&lt;<span class="keyword">stuff</span>&gt;)] <span class="keyword">INTO</span> &lt;different_measurement&gt; </span><br><span class="line"><span class="keyword">FROM</span> &lt;current_measurement&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(&lt;<span class="built_in">interval</span>&gt;)[,&lt;<span class="keyword">stuff</span>&gt;] </span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<p>查询部分被 CREATE CONTINUOUS QUERY […] BEGIN 和 END 所包含，主要的逻辑代码也是在这一部分。</p>
+<p>使用示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE CONTINUOUS QUERY cq_30m ON telegraf BEGIN SELECT mean(used) INTO mem_used_30m FROM mem GROUP BY time(30m) END</span><br><span class="line">&gt; SHOW CONTINUOUS QUERIES</span><br><span class="line">name: telegraf</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">name    query</span><br><span class="line">cq_30m    <span class="keyword">CREATE</span> CONTINUOUS <span class="keyword">QUERY</span> cq_30m <span class="keyword">ON</span> telegraf <span class="keyword">BEGIN</span> </span><br><span class="line"><span class="keyword">SELECT</span> mean(used) <span class="keyword">INTO</span> telegraf.<span class="string">"default"</span>.mem_used_30m <span class="keyword">FROM</span> telegraf.<span class="string">"default"</span>.mem </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(<span class="number">30</span>m) <span class="keyword">END</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">name</span>: _internal</span><br><span class="line"><span class="comment">---------------</span></span><br><span class="line"><span class="keyword">name</span>    <span class="keyword">query</span></span><br></pre></td></tr></table></figure>
+<p>示例在 telegraf 库中新建了一个名为 cq_30m 的连续查询，每三十分钟取一个 used 字段的平均值，加入 mem_used_30m 表中。使用的数据保留策略都是 default。</p>
+<p>2）显示所有已存在的连续查询</p>
+<p>查询所有连续查询可以使用如下语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; SHOW CONTINUOUS QUERIES</span><br><span class="line">name: telegraf</span><br><span class="line"><span class="comment">--------------</span></span><br><span class="line">name    query</span><br><span class="line">cq_30m    <span class="keyword">CREATE</span> CONTINUOUS <span class="keyword">QUERY</span> cq_30m <span class="keyword">ON</span> telegraf </span><br><span class="line"><span class="keyword">BEGIN</span> <span class="keyword">SELECT</span> mean(used) <span class="keyword">INTO</span> telegraf.<span class="string">"default"</span>.mem_used_30m <span class="keyword">FROM</span> telegraf.<span class="string">"default"</span>.mem </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(<span class="number">30</span>m) <span class="keyword">END</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">name</span>: _internal</span><br><span class="line"><span class="comment">---------------</span></span><br><span class="line"><span class="keyword">name</span>    <span class="keyword">query</span></span><br></pre></td></tr></table></figure>
+<p>可以看到其连续查询的名称以及 语句等信息。</p>
+<p>3）删除 Continuous Queries</p>
+<p>删除连续查询的语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> CONTINUOUS <span class="keyword">QUERY</span> &lt;cq_name&gt; <span class="keyword">ON</span> &lt;database_name&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="其他说明">其他说明</h3>
+<p>在 InfluxDB 中，将连续查询与数据存储策略一起使用会达到最好的效果。</p>
+<p>比如，将精度高的表的存储策略定为一个周，然后将精度底的表存储策略定的时间久一点，这要就可以实现高低搭配，以满足不同的工作需要。</p>
+<h2 id="九-再谈连续查询">九、再谈连续查询</h2>
+<h3 id="连续查询语法">连续查询语法</h3>
+<p>连续查询的语法如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> CONTINUOUS <span class="keyword">QUERY</span> &lt;cq_name&gt; <span class="keyword">ON</span> &lt;database_name&gt; [RESAMPLE [EVERY &lt;<span class="built_in">interval</span>&gt;] [<span class="keyword">FOR</span> &lt;<span class="built_in">interval</span>&gt;]] <span class="keyword">BEGIN</span> <span class="keyword">SELECT</span> &lt;<span class="keyword">function</span>&gt;(&lt;<span class="keyword">stuff</span>&gt;)[,&lt;<span class="keyword">function</span>&gt;(&lt;<span class="keyword">stuff</span>&gt;)] <span class="keyword">INTO</span> &lt;different_measurement&gt; <span class="keyword">FROM</span> &lt;current_measurement&gt; [<span class="keyword">WHERE</span> &lt;<span class="keyword">stuff</span>&gt;] <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(&lt;<span class="built_in">interval</span>&gt;)[,&lt;<span class="keyword">stuff</span>&gt;] <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<h3 id="指定连续查询的时间范围">指定连续查询的时间范围</h3>
+<p>可以使用 <code>RESAMPLE FOR</code> 关键词来指定连续查询的时间范围，比如，每次执行都对 1 小时内的数据进行连续查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> CONTINUOUS <span class="keyword">QUERY</span> vampires_1 <span class="keyword">ON</span> transylvania RESAMPLE <span class="keyword">FOR</span> <span class="number">60</span>m <span class="keyword">BEGIN</span> <span class="keyword">SELECT</span> <span class="keyword">count</span>(dracula) <span class="keyword">INTO</span> vampire_populations_1 <span class="keyword">FROM</span> raw_vampires <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(<span class="number">30</span>m) <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<p>这个语句每次会将 1 小时的数据执行连续查询，也就是说，每次执行时，会将 now() 到 now()-30m 和 now()-30m 到 now()-60m 分别做连续查询，这样我们就可以手动指定连续查询的时间范围了。</p>
+<h3 id="指定连续查询的执行频次">指定连续查询的执行频次</h3>
+<p>可以使用 <code>RESAMPLE EVERY</code> 关键词来指定连续查询的执行频次，比如，指定连续查询的执行频次为每 15m 执行一次：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> CONTINUOUS <span class="keyword">QUERY</span> vampires <span class="keyword">ON</span> transylvania RESAMPLE EVERY <span class="number">15</span>m <span class="keyword">BEGIN</span> <span class="keyword">SELECT</span> <span class="keyword">count</span>(dracula) <span class="keyword">INTO</span> vampire_populations <span class="keyword">FROM</span> raw_vampires <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(<span class="number">30</span>m) <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<p>这样，连续查询会每隔 15m 执行一次。</p>
+<h3 id="同时指定连续查询的范围和频次">同时指定连续查询的范围和频次</h3>
+<p>将 RESAMPLE FOR 和 EVERY 关键词同时使用，可以同时指定连续查询的范围和频次，如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> CONTINUOUS <span class="keyword">QUERY</span> vampires_2 <span class="keyword">ON</span> transylvania RESAMPLE EVERY <span class="number">15</span>m <span class="keyword">FOR</span> <span class="number">60</span>m <span class="keyword">BEGIN</span> <span class="keyword">SELECT</span> <span class="keyword">count</span>(dracula) <span class="keyword">INTO</span> vampire_populations_2 <span class="keyword">FROM</span> raw_vampires <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="built_in">time</span>(<span class="number">30</span>m) <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<p>这个语句指定连续查询每 15m 执行一次，每次执行的范围为 60m。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>
+<p>基础教程文档：<a href="https://www.linuxdaxue.com/series/influxdb-series/" target="_blank" rel="noopener">InfluxDB 系列教程 | Linux 大学 </a></p>
+</li>
+<li>
+<p><a href="https://blog.51cto.com/nginxs/2321857" target="_blank" rel="noopener">00-InfluxDB 入门介绍-我的运维历程-51CTO 博客 </a></p>
+</li>
+<li>
+<p><a href="http://www.361way.com/influxdb-user/5291.html" target="_blank" rel="noopener">influxdb 的简单使用 - 运维之路 </a></p>
+</li>
+<li>
+<p><a href="https://segmentfault.com/a/1190000012385313" target="_blank" rel="noopener">influxdb 语法 - 个人文章 - SegmentFault 思否 </a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.frankfeekr.cn/2019/07/24/influxdb-tutorial-start/" title="玩转时序数据库 InfluxDB（一）初体验" target="_blank" rel="external">http://www.frankfeekr.cn/2019/07/24/influxdb-tutorial-start/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/frank-lam" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/avatar2.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/frank-lam" target="_blank"><span class="text-dark">Frank</span><small class="ml-1x">from zero to hero</small></a></h3>
+        <div>潜伏在黎明之前，混迹于互联网江湖。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/08/29/centos-openjdk-2-oraclejdk/" title="CentOS 环境下 Open JDK 替换为 Oracle JDK"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/07/17/springboot-idea-jrebel-hotswap/" title="基于 SpringBoot &amp; IDEA &amp; JRebel 玩转远程热部署与远程调试"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/img/donate/alipay.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/img/donate/wechat.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        
+        <div class="publishby">
+            <!-- <span id="busuanzi_container_site_pv">访问量：<span id="busuanzi_value_site_pv"></span>次</span><br/> -->
+            <!-- frank_lin@whu.edu.cn <br /> -->
+            <!-- fullstack-tutorial -->
+            <!-- <br> -->
+            <iframe style="height: 20px !important;" frameborder="0" scrolling="0" width="120px" height="20px" src="https://ghbtns.com/github-btn.html?user=frank-lam&repo=fullstack-tutorial&type=star&count=true">
+            </iframe><br>
+            <!-- <p id="about_51la">
+                <script type="text/javascript" src="//quote.51.la/q?id=19985869&mb=4"></script>
+            </p> -->
+            <p>
+                <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> </span>
+                <br>
+                <a href="https://beian.miit.gov.cn" target="_blank" style="border-bottom: 1px dashed #ffffffbf;">浙ICP备2021008991号</a>
+            </p>
+            <!-- Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>. -->
+        </div>
+    </div>
+    <script>
+        // setTimeout(function () {
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        // }, 1000);
+
+        do {
+            console.log("loading 51.la");
+        }
+        while (document.getElementById("about_51la").length == 1) {
+            setTimeout(function () {
+                $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+                $('#about_51la a').remove()
+
+            }, 500);
+            // $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+            // $('#about_51la a').remove()
+        }
+        // while ($('#about_51la').length == 1) {
+
+        // }
+
+        // setTimeout(function(){
+        //     console.log($('#about_51la').length);
+        //     if($('#about_51la p')){
+        //         alert("exist");
+        //     }
+        //     else{
+        //         alert("not exist");
+        //     }
+        //     console.log($('#about_51la span'));
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        //  }, 2000);
+
+    </script>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script async src="https://cdn.jsdelivr.net/gh/frank-lam/hexo-blog-site/js/busuanzi.pure.mini.js"></script> -->
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '321c793b57e48017d3d6',
+    clientSecret: '525a416540a4b84efca2e7cdf218edddcd7c2b00',
+    repo: 'hexo-blog-gitalk',
+    owner: 'frank-lam',
+    admin: ['frank-lam'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      if ($(this).hasClass('nofancybox')) return;
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>

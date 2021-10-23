@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>【话题讨论】后台思维写前端，算法思维写后台，产品思维写算法 | Frank&#39;s 技术世界</title>
+  <meta name="description" content="轻松时刻，突然想写这么一个话题。 认识太多的技术达人了，但是他们大多数都有很多的共性，这里举几个例子。   有些大佬们对于深度学习各种神经网络研究颇深，机器学习信手捏来  但是居然对很多数据结构与算法竟然一知半解，一个快速排序的三种写法都不了解，红黑树不了解 Linux 甚至有些都没有学会怎么用 操作系统底层的一些概念更是没有深入了解      还认识一些后台非常有经验的人，拿到一些大厂 Offe">
+<meta name="keywords" content="技术世界">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【话题讨论】后台思维写前端，算法思维写后台，产品思维写算法">
+<meta property="og:url" content="http://www.frankfeekr.cn/2019/04/19/后台思维写前端-算法思维写后台-产品思维写算法/index.html">
+<meta property="og:site_name" content="Frank&#39;s 技术世界">
+<meta property="og:description" content="轻松时刻，突然想写这么一个话题。 认识太多的技术达人了，但是他们大多数都有很多的共性，这里举几个例子。   有些大佬们对于深度学习各种神经网络研究颇深，机器学习信手捏来  但是居然对很多数据结构与算法竟然一知半解，一个快速排序的三种写法都不了解，红黑树不了解 Linux 甚至有些都没有学会怎么用 操作系统底层的一些概念更是没有深入了解      还认识一些后台非常有经验的人，拿到一些大厂 Offe">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-10-23T14:22:52.650Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【话题讨论】后台思维写前端，算法思维写后台，产品思维写算法">
+<meta name="twitter:description" content="轻松时刻，突然想写这么一个话题。 认识太多的技术达人了，但是他们大多数都有很多的共性，这里举几个例子。   有些大佬们对于深度学习各种神经网络研究颇深，机器学习信手捏来  但是居然对很多数据结构与算法竟然一知半解，一个快速排序的三种写法都不了解，红黑树不了解 Linux 甚至有些都没有学会怎么用 操作系统底层的一些概念更是没有深入了解      还认识一些后台非常有经验的人，拿到一些大厂 Offe">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.frankfeekr.cn/2019/04/19/后台思维写前端-算法思维写后台-产品思维写算法/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Frank&#39;s 技术世界" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/frank-lam" target="_blank">
+          <img class="img-circle img-rotate" src="/img/avatar2.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Frank</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">from zero to hero</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou</small><br>
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"> 潜伏在黎明之前，混迹于互联网江湖。</small><br> -->
+
+        <!-- <span class="article-read hidden-xs">
+            <i class="icon icon-eye-fill" aria-hidden="true"></i>
+            <span id="busuanzi_container_page_pv">
+            <span id="busuanzi_value_page_pv">0</span>
+          </span>
+        </span> -->
+
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-location-arrow"></i> frank_lin@whu.edu.cn</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-lintools">
+          <a href="/lintools">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">在线导航</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/tools">
+            
+            <i class="icon icon-shu"></i>
+            
+            <span class="menu-title">四次元ポケット</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-author">
+          <a href="/author">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">作者</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    </nav>
+    <!-- <script type="text/javascript" src="//js.users.51.la/19985869.js"></script> -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?9f90fd773669c197e7a4b7827da87a13";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+      </script>
+      
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <img src="/assets/weixin/qrcode.png" style="width:80%;margin-left:11%;"> <p style="text-align:center;">微信订阅号：全栈开发社区<br>fullstack tutorial developer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/influxdb/">influxdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill-tree/">skill-tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ss/">ss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习宝典/">学习宝典</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发工具/">开发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术世界/">技术世界</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库结构与算法/">数据库结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂文/">杂文</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校招/">校招</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13px;">HTTP</a> <a href="/tags/IDEA/" style="font-size: 13px;">IDEA</a> <a href="/tags/Linux/" style="font-size: 13.5px;">Linux</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/influxdb/" style="font-size: 13px;">influxdb</a> <a href="/tags/skill-tree/" style="font-size: 13px;">skill-tree</a> <a href="/tags/ss/" style="font-size: 13px;">ss</a> <a href="/tags/内网穿透/" style="font-size: 13px;">内网穿透</a> <a href="/tags/前端/" style="font-size: 13px;">前端</a> <a href="/tags/学习宝典/" style="font-size: 13px;">学习宝典</a> <a href="/tags/开发工具/" style="font-size: 13.5px;">开发工具</a> <a href="/tags/技术世界/" style="font-size: 13.5px;">技术世界</a> <a href="/tags/数据库结构与算法/" style="font-size: 13px;">数据库结构与算法</a> <a href="/tags/杂文/" style="font-size: 13.5px;">杂文</a> <a href="/tags/校招/" style="font-size: 14px;">校招</a> <a href="/tags/深度学习/" style="font-size: 13px;">深度学习</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/25/java-regular-group/" class="title">Java 正则表达式的命名捕获组</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-25T08:45:04.000Z" itemprop="datePublished">2021-09-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/05/16/docs-tutorial/" class="title">开发者如何编写优雅的技术文档 —— 手把手教你编写极致的文档</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-05-16T14:05:37.000Z" itemprop="datePublished">2021-05-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/github-speed-up/" class="title">一行命令实现 Github 国内镜像加速</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T13:47:11.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/let-is-encrypt-cerbot-for-https/" class="title">使用 Certbot 为网站签发永久免费的 HTTPS 证书</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T11:01:10.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/31/about-campus-apply/" class="title">关于校招，你必须了解的那些事</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-31T08:19:49.000Z" itemprop="datePublished">2020-05-31</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-后台思维写前端-算法思维写后台-产品思维写算法" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【话题讨论】后台思维写前端，算法思维写后台，产品思维写算法
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/04/19/后台思维写前端-算法思维写后台-产品思维写算法/" class="article-date">
+	  <time datetime="2019-04-19T03:00:10.000Z" itemprop="datePublished">2019-04-19 11:00:10</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/技术世界/">技术世界</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/04/19/后台思维写前端-算法思维写后台-产品思维写算法/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<!-- <font color=#1a2433>🎯置顶</font> -->
+		<!-- <span>  </span>
+		<i class="icon icon-edit"></i> -->
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：568 words</span> -->
+	
+	
+		<span>  </span>
+		<i class="icon icon-time"></i>
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：568 words,</span> -->
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">568 words, 1 mins</span>
+		<!-- <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读：1 mins</span> -->
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>轻松时刻，突然想写这么一个话题。</p>
+<p>认识太多的技术达人了，但是他们大多数都有很多的共性，这里举几个例子。</p>
+<ol>
+<li>
+<p>有些大佬们对于深度学习各种神经网络研究颇深，机器学习信手捏来</p>
+<ul>
+<li>但是居然对很多数据结构与算法竟然一知半解，一个快速排序的三种写法都不了解，红黑树不了解</li>
+<li>Linux 甚至有些都没有学会怎么用</li>
+<li>操作系统底层的一些概念更是没有深入了解</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li>
+<p>还认识一些后台非常有经验的人，拿到一些大厂 Offer 的人</p>
+<ul>
+<li>居然连 HTTP 的基本协议都不了解</li>
+<li>对前端简单的 HTML、CSS、JS 都没接触过</li>
+</ul>
+</li>
+</ol>
+<ol start="3">
+<li>如果你有更好的例子，欢迎大家留言补充 …</li>
+</ol>
+<p>其实技术就是工具，根据不同的应用场景，使用不同的技术栈。个人比较推崇人人都是产品经理，人人都架构师的思维理念。在每个项目中或许我们只是一个角色的存在，只有更好的掌握不同方向的技能，才能在自己产出的同时给到别人最好的交互体验。</p>
+<p><strong>前端不懂后台</strong>，怎么和后台更好的交付，怎么能提出更好的接口设计需求？</p>
+<p><strong>后台不懂前端</strong>，怎么才能根据不同的技术选型，为前端提供最好的接口交互设计？</p>
+<p><strong>算法不懂前端，不懂后台</strong>，如何才能将我们通过数学逻辑输出的有效数据更好的通过前端、后台的方式展示？</p>
+<p><strong>产品不懂技术</strong>，如何才能有理有据，判断项目和技术的可行性？如何才能更好的让项目落地？一个好的产品经理必须具备一定的技术水准。</p>
+<p>作为技术而言，我深信做的不是功能，是产品。</p>
+<blockquote>
+<p>最后，这里说说 “懂” 的理解：懂意味着了解，写过实际的项目，但并不意味着一定需要深入。</p>
+</blockquote>
+<p>个人知识水平能力有限，希望技术达人留言交流。本文将根据大家的智慧持续更新…</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.frankfeekr.cn/2019/04/19/后台思维写前端-算法思维写后台-产品思维写算法/" title="【话题讨论】后台思维写前端，算法思维写后台，产品思维写算法" target="_blank" rel="external">http://www.frankfeekr.cn/2019/04/19/后台思维写前端-算法思维写后台-产品思维写算法/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/frank-lam" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/avatar2.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/frank-lam" target="_blank"><span class="text-dark">Frank</span><small class="ml-1x">from zero to hero</small></a></h3>
+        <div>潜伏在黎明之前，混迹于互联网江湖。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/04/19/cs-learning-list/" title="技术学习清单⎡计算机学习的“武林秘籍”⎦"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/04/17/前端知识体系/" title="前端知识体系"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/img/donate/alipay.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/img/donate/wechat.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        
+        <div class="publishby">
+            <!-- <span id="busuanzi_container_site_pv">访问量：<span id="busuanzi_value_site_pv"></span>次</span><br/> -->
+            <!-- frank_lin@whu.edu.cn <br /> -->
+            <!-- fullstack-tutorial -->
+            <!-- <br> -->
+            <iframe style="height: 20px !important;" frameborder="0" scrolling="0" width="120px" height="20px" src="https://ghbtns.com/github-btn.html?user=frank-lam&repo=fullstack-tutorial&type=star&count=true">
+            </iframe><br>
+            <!-- <p id="about_51la">
+                <script type="text/javascript" src="//quote.51.la/q?id=19985869&mb=4"></script>
+            </p> -->
+            <p>
+                <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> </span>
+                <br>
+                <a href="https://beian.miit.gov.cn" target="_blank" style="border-bottom: 1px dashed #ffffffbf;">浙ICP备2021008991号</a>
+            </p>
+            <!-- Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>. -->
+        </div>
+    </div>
+    <script>
+        // setTimeout(function () {
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        // }, 1000);
+
+        do {
+            console.log("loading 51.la");
+        }
+        while (document.getElementById("about_51la").length == 1) {
+            setTimeout(function () {
+                $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+                $('#about_51la a').remove()
+
+            }, 500);
+            // $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+            // $('#about_51la a').remove()
+        }
+        // while ($('#about_51la').length == 1) {
+
+        // }
+
+        // setTimeout(function(){
+        //     console.log($('#about_51la').length);
+        //     if($('#about_51la p')){
+        //         alert("exist");
+        //     }
+        //     else{
+        //         alert("not exist");
+        //     }
+        //     console.log($('#about_51la span'));
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        //  }, 2000);
+
+    </script>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script async src="https://cdn.jsdelivr.net/gh/frank-lam/hexo-blog-site/js/busuanzi.pure.mini.js"></script> -->
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '321c793b57e48017d3d6',
+    clientSecret: '525a416540a4b84efca2e7cdf218edddcd7c2b00',
+    repo: 'hexo-blog-gitalk',
+    owner: 'frank-lam',
+    admin: ['frank-lam'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      if ($(this).hasClass('nofancybox')) return;
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>

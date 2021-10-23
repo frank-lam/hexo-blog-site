@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>深度学习初识 | Frank&#39;s 技术世界</title>
+  <meta name="description" content="一、入门基本概念 机器学习简介 机器学习：无序数据转化为价值的方法 机器学习价值：从数据中抽取规律，并预测未来 机器学习应用举例  分类问题：图像识别、垃圾邮件识别 回归问题：股价预测、房价预测 排序问题：点击率预估、推荐 生成问题：图像生成、图像风格转换、图像文字描述生成  机器学习应用流程  机器学习岗位职责  数据处理（采集+去噪） 模型训练（特征+模型） 模型评估与优化（MSE、F1-sc">
+<meta name="keywords" content="深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习初识">
+<meta property="og:url" content="http://www.frankfeekr.cn/2019/04/16/深度学习初识/index.html">
+<meta property="og:site_name" content="Frank&#39;s 技术世界">
+<meta property="og:description" content="一、入门基本概念 机器学习简介 机器学习：无序数据转化为价值的方法 机器学习价值：从数据中抽取规律，并预测未来 机器学习应用举例  分类问题：图像识别、垃圾邮件识别 回归问题：股价预测、房价预测 排序问题：点击率预估、推荐 生成问题：图像生成、图像风格转换、图像文字描述生成  机器学习应用流程  机器学习岗位职责  数据处理（采集+去噪） 模型训练（特征+模型） 模型评估与优化（MSE、F1-sc">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image-20190405103241674.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/b248f2b9d659c18808a7b75d7537dea09a886564.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/v2-718f95df083b2d715ee29b018d9eb5c2_1200x500.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/640.jpeg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image_1_0_0.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/v2-4bcf97eff1afd63aab37c95d751f270f_r.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/river-starrynight-combined.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/neural-network-3.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/1OvTgvr5SNAp579n9kyBzAw.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/2112343587-5b78f2b533cd1.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/3893839953-5b78f3ea9066e.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image-20190405111251357.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/1388465484-5b78f514b3a47.png">
+<meta property="og:image" content="https://image-static.segmentfault.com/342/024/3420244370-5b78f5943f6bc">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image-20190405111638911.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image-20190405111848924.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image-20190405111934921.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/gradient.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/1867956752-5b78fbe0b8f6b.png">
+<meta property="og:updated_time" content="2021-10-23T14:22:52.652Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习初识">
+<meta name="twitter:description" content="一、入门基本概念 机器学习简介 机器学习：无序数据转化为价值的方法 机器学习价值：从数据中抽取规律，并预测未来 机器学习应用举例  分类问题：图像识别、垃圾邮件识别 回归问题：股价预测、房价预测 排序问题：点击率预估、推荐 生成问题：图像生成、图像风格转换、图像文字描述生成  机器学习应用流程  机器学习岗位职责  数据处理（采集+去噪） 模型训练（特征+模型） 模型评估与优化（MSE、F1-sc">
+<meta name="twitter:image" content="http://www.frankfeekr.cn/assets/image-20190405103241674.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.frankfeekr.cn/2019/04/16/深度学习初识/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Frank&#39;s 技术世界" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/frank-lam" target="_blank">
+          <img class="img-circle img-rotate" src="/img/avatar2.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Frank</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">from zero to hero</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou</small><br>
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"> 潜伏在黎明之前，混迹于互联网江湖。</small><br> -->
+
+        <!-- <span class="article-read hidden-xs">
+            <i class="icon icon-eye-fill" aria-hidden="true"></i>
+            <span id="busuanzi_container_page_pv">
+            <span id="busuanzi_value_page_pv">0</span>
+          </span>
+        </span> -->
+
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-location-arrow"></i> frank_lin@whu.edu.cn</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-lintools">
+          <a href="/lintools">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">在线导航</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/tools">
+            
+            <i class="icon icon-shu"></i>
+            
+            <span class="menu-title">四次元ポケット</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-author">
+          <a href="/author">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">作者</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    </nav>
+    <!-- <script type="text/javascript" src="//js.users.51.la/19985869.js"></script> -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?9f90fd773669c197e7a4b7827da87a13";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+      </script>
+      
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <img src="/assets/weixin/qrcode.png" style="width:80%;margin-left:11%;"> <p style="text-align:center;">微信订阅号：全栈开发社区<br>fullstack tutorial developer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/influxdb/">influxdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill-tree/">skill-tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ss/">ss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习宝典/">学习宝典</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发工具/">开发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术世界/">技术世界</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库结构与算法/">数据库结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂文/">杂文</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校招/">校招</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13px;">HTTP</a> <a href="/tags/IDEA/" style="font-size: 13px;">IDEA</a> <a href="/tags/Linux/" style="font-size: 13.5px;">Linux</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/influxdb/" style="font-size: 13px;">influxdb</a> <a href="/tags/skill-tree/" style="font-size: 13px;">skill-tree</a> <a href="/tags/ss/" style="font-size: 13px;">ss</a> <a href="/tags/内网穿透/" style="font-size: 13px;">内网穿透</a> <a href="/tags/前端/" style="font-size: 13px;">前端</a> <a href="/tags/学习宝典/" style="font-size: 13px;">学习宝典</a> <a href="/tags/开发工具/" style="font-size: 13.5px;">开发工具</a> <a href="/tags/技术世界/" style="font-size: 13.5px;">技术世界</a> <a href="/tags/数据库结构与算法/" style="font-size: 13px;">数据库结构与算法</a> <a href="/tags/杂文/" style="font-size: 13.5px;">杂文</a> <a href="/tags/校招/" style="font-size: 14px;">校招</a> <a href="/tags/深度学习/" style="font-size: 13px;">深度学习</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/25/java-regular-group/" class="title">Java 正则表达式的命名捕获组</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-25T08:45:04.000Z" itemprop="datePublished">2021-09-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/05/16/docs-tutorial/" class="title">开发者如何编写优雅的技术文档 —— 手把手教你编写极致的文档</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-05-16T14:05:37.000Z" itemprop="datePublished">2021-05-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/github-speed-up/" class="title">一行命令实现 Github 国内镜像加速</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T13:47:11.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/let-is-encrypt-cerbot-for-https/" class="title">使用 Certbot 为网站签发永久免费的 HTTPS 证书</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T11:01:10.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/31/about-campus-apply/" class="title">关于校招，你必须了解的那些事</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-31T08:19:49.000Z" itemprop="datePublished">2020-05-31</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-入门基本概念"><span class="toc-number">1.</span> <span class="toc-text">一、入门基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习简介"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#机器学习应用举例"><span class="toc-number">1.1.1.</span> <span class="toc-text">机器学习应用举例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#机器学习应用流程"><span class="toc-number">1.1.2.</span> <span class="toc-text">机器学习应用流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#机器学习岗位职责"><span class="toc-number">1.1.3.</span> <span class="toc-text">机器学习岗位职责</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深度学习简介"><span class="toc-number">1.2.</span> <span class="toc-text">深度学习简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#深度学习与机器学习关系"><span class="toc-number">1.2.1.</span> <span class="toc-text">深度学习与机器学习关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#深度学习算法集合"><span class="toc-number">1.2.2.</span> <span class="toc-text">深度学习算法集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#深度学习进展"><span class="toc-number">1.2.3.</span> <span class="toc-text">深度学习进展</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-神经网络"><span class="toc-number">2.</span> <span class="toc-text">二、神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#人体神经元模型"><span class="toc-number">2.1.</span> <span class="toc-text">人体神经元模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工神经网络"><span class="toc-number">2.2.</span> <span class="toc-text">人工神经网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-神经元"><span class="toc-number">2.3.</span> <span class="toc-text">1. 神经元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-逻辑回归模型"><span class="toc-number">2.4.</span> <span class="toc-text">2. 逻辑回归模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目标函数"><span class="toc-number">2.5.</span> <span class="toc-text">目标函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#梯度下降"><span class="toc-number">2.6.</span> <span class="toc-text">梯度下降</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-tensorflow基础"><span class="toc-number">3.</span> <span class="toc-text">三、Tensorflow基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tensorflow简介"><span class="toc-number">3.1.</span> <span class="toc-text">Tensorflow简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算图模型"><span class="toc-number">3.2.</span> <span class="toc-text">计算图模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tensorflow-安装"><span class="toc-number">4.</span> <span class="toc-text">TensorFlow 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-深度学习初识" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深度学习初识
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/04/16/深度学习初识/" class="article-date">
+	  <time datetime="2019-04-16T13:30:48.000Z" itemprop="datePublished">2019-04-16 21:30:48</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/深度学习/">深度学习</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/04/16/深度学习初识/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<!-- <font color=#1a2433>🎯置顶</font> -->
+		<!-- <span>  </span>
+		<i class="icon icon-edit"></i> -->
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：972 words</span> -->
+	
+	
+		<span>  </span>
+		<i class="icon icon-time"></i>
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：972 words,</span> -->
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">972 words, 3 mins</span>
+		<!-- <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读：3 mins</span> -->
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="一-入门基本概念">一、入门基本概念</h2>
+<h3 id="机器学习简介">机器学习简介</h3>
+<p><strong>机器学习</strong>：无序数据转化为价值的方法<br>
+<strong>机器学习价值</strong>：从数据中抽取规律，并预测未来</p>
+<h4 id="机器学习应用举例">机器学习应用举例</h4>
+<ul>
+<li>分类问题：图像识别、垃圾邮件识别</li>
+<li>回归问题：股价预测、房价预测</li>
+<li>排序问题：点击率预估、推荐</li>
+<li>生成问题：图像生成、图像风格转换、图像文字描述生成</li>
+</ul>
+<h4 id="机器学习应用流程">机器学习应用流程</h4>
+<p><img src="/assets/image-20190405103241674.png" alt="image-20190405103241674"></p>
+<h4 id="机器学习岗位职责">机器学习岗位职责</h4>
+<ul>
+<li>数据处理（采集+去噪）</li>
+<li>模型训练（特征+模型）</li>
+<li>模型评估与优化（MSE、F1-score、AUC+调参）</li>
+<li>模型应用（A/B测试）</li>
+</ul>
+<h3 id="深度学习简介">深度学习简介</h3>
+<p><img src="/assets/b248f2b9d659c18808a7b75d7537dea09a886564.jpg" alt="img"></p>
+<p>人工智能、机器学习、深度学习之间的关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">人工智能（AI）&gt; 机器学习（Machine Learning）&gt; 深度学习（Deep learning）</span><br></pre></td></tr></table></figure>
+<h4 id="深度学习与机器学习关系">深度学习与机器学习关系</h4>
+<ul>
+<li>机器学习是实现人工智能的方法</li>
+<li>深度学习是实现机器学习算法的技术</li>
+</ul>
+<h4 id="深度学习算法集合">深度学习算法集合</h4>
+<ul>
+<li><strong>卷积神经网络</strong>(Convolutional Neural Network, CNN)
+<ul>
+<li>CV 领域使用较多</li>
+</ul>
+</li>
+<li><strong>循环神经网络</strong>(Recurrent Neural Networks，RNNs)
+<ul>
+<li>NLP 领域使用较多</li>
+<li>处理不定长数据</li>
+</ul>
+</li>
+<li>自动编码器</li>
+<li>稀疏编码</li>
+<li>深度信念网络</li>
+<li>深度学习 + 强化学习 = <strong>深度强化学习</strong>
+<ul>
+<li>AlphaGo</li>
+<li>AlphaZero</li>
+</ul>
+</li>
+</ul>
+<h4 id="深度学习进展">深度学习进展</h4>
+<ol>
+<li>图像分类</li>
+</ol>
+<p>ImageNet: <a href="http://image-net.org/" target="_blank" rel="noopener">http://image-net.org/</a></p>
+<p><img src="/assets/v2-718f95df083b2d715ee29b018d9eb5c2_1200x500.jpg" alt="v2-718f95df083b2d715ee29b018d9eb5c2_1200x500"></p>
+<ol start="2">
+<li>机器翻译</li>
+</ol>
+<p><img src="/assets/640.jpeg" alt="机器翻译"></p>
+<ol start="3">
+<li>图像生成</li>
+</ol>
+<p><img src="/assets/image_1_0_0.jpg" alt="image_1_0_0"></p>
+<p><img src="/assets/v2-4bcf97eff1afd63aab37c95d751f270f_r.jpg" alt="v2-4bcf97eff1afd63aab37c95d751f270f_r"></p>
+<p><img src="/assets/river-starrynight-combined.png" alt="river-starrynight-combined"></p>
+<ul>
+<li><a href="http://l2program.co.uk/945/implementing-neural-artistic-style-transfer" target="_blank" rel="noopener">Implementing Neural Artistic Style Transfer | L2Program</a></li>
+</ul>
+<ol start="4">
+<li>
+<p>字体生成</p>
+</li>
+<li>
+<p>AlphaGo</p>
+</li>
+</ol>
+<h2 id="二-神经网络">二、神经网络</h2>
+<h3 id="人体神经元模型">人体神经元模型</h3>
+<p>神经网络模型是模仿人类的大脑神经构造而构造的。先来看人体神经元模型。</p>
+<p><img src="/assets/neural-network-3.png" alt="img"></p>
+<p>神经元的可以分为四个区域：</p>
+<ul>
+<li>接收区（receptive zone）：树突接收到输入信息。</li>
+<li>触发区（trigger zone）：位于轴突和细胞体交接的地方，决定是否产生神经冲动。</li>
+<li>传导区（conducting zone）：由轴突进行神经冲动的传递。</li>
+<li>输出区（output zone）：神经冲动的目的就是要让神经末梢，突触的神经递质或电力释出，才能影响下一个接受的细胞（神经元、肌肉细胞或是腺体细胞），此称为突触传递。</li>
+</ul>
+<h3 id="人工神经网络">人工神经网络</h3>
+<p>人工神经网络（ANN：Artificial Neural Network），简称神经网络（NN：Neural Network）。迄今为止，人工神经网络尚无统一定义， 其实一种模拟了人体神经元构成的数学模型，依靠系统的复杂程度，通过调整内部大量节点之间相互连接的关系，从而达到处理信息的目的。</p>
+<p><img src="/assets/1OvTgvr5SNAp579n9kyBzAw.png" alt="img"></p>
+<p>上图显示了人工神经网络是一个分层模型，逻辑上可以分为三层：</p>
+<ul>
+<li>输入层：输入层接收特征向量 x 。</li>
+<li>输出层：输出层产出最终的预测 h 。</li>
+<li>隐含层：隐含层介于输入层与输出层之间，之所以称之为隐含层，是因为当中产生的值并不像输入层使用的样本矩阵 X 或者输出层用到的标签矩阵 y 那样直接可见。</li>
+</ul>
+<h3 id="1-神经元">1. 神经元</h3>
+<p><img src="/assets/2112343587-5b78f2b533cd1.png" alt="img"></p>
+<p><img src="/assets/3893839953-5b78f3ea9066e.png" alt="img"></p>
+<p><img src="/assets/image-20190405111251357.png" alt="image-20190405111251357"></p>
+<h3 id="2-逻辑回归模型">2. 逻辑回归模型</h3>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">神经元 -&gt; 激活函数sigmoid -&gt; 二元类逻辑斯蒂回归模型</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/1388465484-5b78f514b3a47.png" alt="img"></p>
+<p>神经元 -&gt; 多输出</p>
+<ul>
+<li>W从向量扩展为矩阵</li>
+<li>输出W*x则变成向量</li>
+</ul>
+<p><img src="https://image-static.segmentfault.com/342/024/3420244370-5b78f5943f6bc" alt="img"></p>
+<p>多输出神经元 -&gt; softmax -&gt; 多分类逻辑斯蒂回归模型</p>
+<p><img src="/assets/image-20190405111638911.png" alt="image-20190405111638911"></p>
+<p><img src="/assets/image-20190405111848924.png" alt="image-20190405111848924"></p>
+<p><img src="/assets/image-20190405111934921.png" alt="image-20190405111934921"></p>
+<h3 id="目标函数">目标函数</h3>
+<p>也称为损失函数，衡量对数据的拟合程度</p>
+<h3 id="梯度下降">梯度下降</h3>
+<ul>
+<li>
+<p>下山算法</p>
+<ul>
+<li>找方向</li>
+<li>走一步</li>
+</ul>
+</li>
+<li>
+<p>梯度下降算法</p>
+</li>
+</ul>
+<p><img src="/assets/gradient.png" alt="img"></p>
+<h2 id="三-tensorflow基础">三、Tensorflow基础</h2>
+<h3 id="tensorflow简介">Tensorflow简介</h3>
+<p>Google Brain 第二代机器学习框架</p>
+<h3 id="计算图模型">计算图模型</h3>
+<ul>
+<li>命令式变成</li>
+<li>声明式变成</li>
+</ul>
+<p><img src="/assets/1867956752-5b78fbe0b8f6b.png" alt="img"></p>
+<h2 id="tensorflow-安装">TensorFlow 安装</h2>
+<ul>
+<li>
+<p><a href="https://tensorflow.google.cn/" target="_blank" rel="noopener">TensorFlow 官方文档</a></p>
+</li>
+<li>
+<p><a href="https://tensorflow.google.cn/install" target="_blank" rel="noopener">TensorFlow 安装方法</a></p>
+</li>
+</ul>
+<ol>
+<li>基于 VirtualEnv 的安装</li>
+<li>原生 pip</li>
+<li>Docker</li>
+<li>从源代码安装</li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>
+<p><a href="https://waltyou.github.io/Neural-Network/#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AE%9A%E4%B9%89" target="_blank" rel="noopener">机器学习入门(五) – 神经网络</a></p>
+</li>
+<li>
+<p><a href="https://segmentfault.com/a/1190000016068053" target="_blank" rel="noopener">深度学习-初识 - Corwien - SegmentFault 思否</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.frankfeekr.cn/2019/04/16/深度学习初识/" title="深度学习初识" target="_blank" rel="external">http://www.frankfeekr.cn/2019/04/16/深度学习初识/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/frank-lam" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/avatar2.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/frank-lam" target="_blank"><span class="text-dark">Frank</span><small class="ml-1x">from zero to hero</small></a></h3>
+        <div>潜伏在黎明之前，混迹于互联网江湖。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/04/17/Git命令速查/" title="Git 命令速查"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/04/16/手把手教你，搭建搬瓦工-SS-代理/" title="手把手教你，搭建搬瓦工 SS 代理"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/img/donate/alipay.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/img/donate/wechat.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        
+        <div class="publishby">
+            <!-- <span id="busuanzi_container_site_pv">访问量：<span id="busuanzi_value_site_pv"></span>次</span><br/> -->
+            <!-- frank_lin@whu.edu.cn <br /> -->
+            <!-- fullstack-tutorial -->
+            <!-- <br> -->
+            <iframe style="height: 20px !important;" frameborder="0" scrolling="0" width="120px" height="20px" src="https://ghbtns.com/github-btn.html?user=frank-lam&repo=fullstack-tutorial&type=star&count=true">
+            </iframe><br>
+            <!-- <p id="about_51la">
+                <script type="text/javascript" src="//quote.51.la/q?id=19985869&mb=4"></script>
+            </p> -->
+            <p>
+                <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> </span>
+                <br>
+                <a href="https://beian.miit.gov.cn" target="_blank" style="border-bottom: 1px dashed #ffffffbf;">浙ICP备2021008991号</a>
+            </p>
+            <!-- Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>. -->
+        </div>
+    </div>
+    <script>
+        // setTimeout(function () {
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        // }, 1000);
+
+        do {
+            console.log("loading 51.la");
+        }
+        while (document.getElementById("about_51la").length == 1) {
+            setTimeout(function () {
+                $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+                $('#about_51la a').remove()
+
+            }, 500);
+            // $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+            // $('#about_51la a').remove()
+        }
+        // while ($('#about_51la').length == 1) {
+
+        // }
+
+        // setTimeout(function(){
+        //     console.log($('#about_51la').length);
+        //     if($('#about_51la p')){
+        //         alert("exist");
+        //     }
+        //     else{
+        //         alert("not exist");
+        //     }
+        //     console.log($('#about_51la span'));
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        //  }, 2000);
+
+    </script>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script async src="https://cdn.jsdelivr.net/gh/frank-lam/hexo-blog-site/js/busuanzi.pure.mini.js"></script> -->
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '321c793b57e48017d3d6',
+    clientSecret: '525a416540a4b84efca2e7cdf218edddcd7c2b00',
+    repo: 'hexo-blog-gitalk',
+    owner: 'frank-lam',
+    admin: ['frank-lam'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      if ($(this).hasClass('nofancybox')) return;
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>

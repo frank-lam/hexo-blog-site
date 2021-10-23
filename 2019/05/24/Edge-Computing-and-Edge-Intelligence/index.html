@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>Edge Computing and Edge Intelligence | Frank&#39;s 技术世界</title>
+  <meta name="description" content="参考文献   《Edge Computing: Vision and Challenges》  IEEE INTERNET OF THINGS JOURNAL, VOL. 3, NO. 5, OCTOBER 2016    边缘云计算技术及标准化白皮书（2018） - 中国电子技术标准化研究  阿里云计算有限公司 中国电子技术标准化研究院 等 2018 年 12 月 12 日联合发布    **">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Edge Computing and Edge Intelligence">
+<meta property="og:url" content="http://www.frankfeekr.cn/2019/05/24/Edge-Computing-and-Edge-Intelligence/index.html">
+<meta property="og:site_name" content="Frank&#39;s 技术世界">
+<meta property="og:description" content="参考文献   《Edge Computing: Vision and Challenges》  IEEE INTERNET OF THINGS JOURNAL, VOL. 3, NO. 5, OCTOBER 2016    边缘云计算技术及标准化白皮书（2018） - 中国电子技术标准化研究  阿里云计算有限公司 中国电子技术标准化研究院 等 2018 年 12 月 12 日联合发布    **">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/cloud-computing.jpeg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image-20190313232354690.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/201712281422260032.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/rHBc-fyhfxph3128092.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/cloud-fog-edge.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/cloud-fog-edge_infographic.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/img-pyramid.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/v2-cba74bdb8ddd2ebb2a93eb6d244c0823_b.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/v2-9281e80bb6f9a93904e1e85765f9807d_hd.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/v2-07b7846425b54df30b4c24ac115f1c0c_b.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/20180707102820218.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/20180707102858946.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image-20190314095517702.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/image-20190314095942979.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/ulqfm10n0e.jpeg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/1p5anqale5.jpeg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/7snzcywmne.jpeg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/j8oahdah3t.jpeg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/22f2kcn3e4.jpeg">
+<meta property="og:updated_time" content="2021-10-23T14:22:52.646Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Edge Computing and Edge Intelligence">
+<meta name="twitter:description" content="参考文献   《Edge Computing: Vision and Challenges》  IEEE INTERNET OF THINGS JOURNAL, VOL. 3, NO. 5, OCTOBER 2016    边缘云计算技术及标准化白皮书（2018） - 中国电子技术标准化研究  阿里云计算有限公司 中国电子技术标准化研究院 等 2018 年 12 月 12 日联合发布    **">
+<meta name="twitter:image" content="http://www.frankfeekr.cn/assets/cloud-computing.jpeg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.frankfeekr.cn/2019/05/24/Edge-Computing-and-Edge-Intelligence/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Frank&#39;s 技术世界" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/frank-lam" target="_blank">
+          <img class="img-circle img-rotate" src="/img/avatar2.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Frank</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">from zero to hero</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou</small><br>
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"> 潜伏在黎明之前，混迹于互联网江湖。</small><br> -->
+
+        <!-- <span class="article-read hidden-xs">
+            <i class="icon icon-eye-fill" aria-hidden="true"></i>
+            <span id="busuanzi_container_page_pv">
+            <span id="busuanzi_value_page_pv">0</span>
+          </span>
+        </span> -->
+
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-location-arrow"></i> frank_lin@whu.edu.cn</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-lintools">
+          <a href="/lintools">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">在线导航</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/tools">
+            
+            <i class="icon icon-shu"></i>
+            
+            <span class="menu-title">四次元ポケット</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-author">
+          <a href="/author">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">作者</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    </nav>
+    <!-- <script type="text/javascript" src="//js.users.51.la/19985869.js"></script> -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?9f90fd773669c197e7a4b7827da87a13";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+      </script>
+      
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <img src="/assets/weixin/qrcode.png" style="width:80%;margin-left:11%;"> <p style="text-align:center;">微信订阅号：全栈开发社区<br>fullstack tutorial developer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/influxdb/">influxdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill-tree/">skill-tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ss/">ss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习宝典/">学习宝典</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发工具/">开发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术世界/">技术世界</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库结构与算法/">数据库结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂文/">杂文</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校招/">校招</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13px;">HTTP</a> <a href="/tags/IDEA/" style="font-size: 13px;">IDEA</a> <a href="/tags/Linux/" style="font-size: 13.5px;">Linux</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/influxdb/" style="font-size: 13px;">influxdb</a> <a href="/tags/skill-tree/" style="font-size: 13px;">skill-tree</a> <a href="/tags/ss/" style="font-size: 13px;">ss</a> <a href="/tags/内网穿透/" style="font-size: 13px;">内网穿透</a> <a href="/tags/前端/" style="font-size: 13px;">前端</a> <a href="/tags/学习宝典/" style="font-size: 13px;">学习宝典</a> <a href="/tags/开发工具/" style="font-size: 13.5px;">开发工具</a> <a href="/tags/技术世界/" style="font-size: 13.5px;">技术世界</a> <a href="/tags/数据库结构与算法/" style="font-size: 13px;">数据库结构与算法</a> <a href="/tags/杂文/" style="font-size: 13.5px;">杂文</a> <a href="/tags/校招/" style="font-size: 14px;">校招</a> <a href="/tags/深度学习/" style="font-size: 13px;">深度学习</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/25/java-regular-group/" class="title">Java 正则表达式的命名捕获组</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-25T08:45:04.000Z" itemprop="datePublished">2021-09-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/05/16/docs-tutorial/" class="title">开发者如何编写优雅的技术文档 —— 手把手教你编写极致的文档</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-05-16T14:05:37.000Z" itemprop="datePublished">2021-05-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/github-speed-up/" class="title">一行命令实现 Github 国内镜像加速</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T13:47:11.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/let-is-encrypt-cerbot-for-https/" class="title">使用 Certbot 为网站签发永久免费的 HTTPS 证书</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T11:01:10.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/31/about-campus-apply/" class="title">关于校招，你必须了解的那些事</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-31T08:19:49.000Z" itemprop="datePublished">2020-05-31</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">1.</span> <span class="toc-text">参考文献</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一-引言"><span class="toc-number">2.</span> <span class="toc-text">一、引言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-it-3-0-时代会发生什么？"><span class="toc-number">2.1.</span> <span class="toc-text">1. IT 3.0 时代会发生什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-cloud-fog-and-edge-computing-what-s-the-difference"><span class="toc-number">2.2.</span> <span class="toc-text">2. Cloud, Fog and Edge Computing – What’s the Difference?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实践场景"><span class="toc-number">2.2.1.</span> <span class="toc-text">实践场景</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#智慧城市"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">智慧城市</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自动驾驶技术与智能交通"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">自动驾驶技术与智能交通</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#云计算-cloud-computing"><span class="toc-number">2.2.2.</span> <span class="toc-text">云计算（Cloud Computing）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#边缘计算-edge-computing"><span class="toc-number">2.2.3.</span> <span class="toc-text">边缘计算（Edge Computing）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#雾计算-fog-computing"><span class="toc-number">2.2.4.</span> <span class="toc-text">雾计算（Fog Computing）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-云计算是如何服务的"><span class="toc-number">2.3.</span> <span class="toc-text">3. 云计算是如何服务的</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#what-is-iaas"><span class="toc-number">2.3.1.</span> <span class="toc-text">What is IaaS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#what-is-paas"><span class="toc-number">2.3.2.</span> <span class="toc-text">What is PaaS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#what-is-saas"><span class="toc-number">2.3.3.</span> <span class="toc-text">What is SaaS</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-私有云-公有云-混合云"><span class="toc-number">2.4.</span> <span class="toc-text">4. 私有云、公有云、混合云</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#私有云"><span class="toc-number">2.4.1.</span> <span class="toc-text">私有云</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#共有云"><span class="toc-number">2.4.2.</span> <span class="toc-text">共有云</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#混合云"><span class="toc-number">2.4.3.</span> <span class="toc-text">混合云</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-再谈边缘计算"><span class="toc-number">3.</span> <span class="toc-text">二、再谈边缘计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-引言"><span class="toc-number">3.1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-什么是边缘计算"><span class="toc-number">3.2.</span> <span class="toc-text">2. 什么是边缘计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-为什么需要边缘计算"><span class="toc-number">3.3.</span> <span class="toc-text">3. 为什么需要边缘计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-边缘计算的优点"><span class="toc-number">3.4.</span> <span class="toc-text">4. 边缘计算的优点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-边缘智能：基于边缘计算的深度学习模型推断加速方法"><span class="toc-number">4.</span> <span class="toc-text">三、边缘智能：基于边缘计算的深度学习模型推断加速方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生态"><span class="toc-number">4.1.</span> <span class="toc-text">生态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#研究背景"><span class="toc-number">4.2.</span> <span class="toc-text">研究背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#研究问题"><span class="toc-number">4.3.</span> <span class="toc-text">研究问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#研究结果"><span class="toc-number">4.4.</span> <span class="toc-text">研究结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Edge-Computing-and-Edge-Intelligence" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Edge Computing and Edge Intelligence
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/05/24/Edge-Computing-and-Edge-Intelligence/" class="article-date">
+	  <time datetime="2019-05-24T06:06:11.000Z" itemprop="datePublished">2019-05-24 14:06:11</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/05/24/Edge-Computing-and-Edge-Intelligence/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<!-- <font color=#1a2433>🎯置顶</font> -->
+		<!-- <span>  </span>
+		<i class="icon icon-edit"></i> -->
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：4.4k words</span> -->
+	
+	
+		<span>  </span>
+		<i class="icon icon-time"></i>
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：4.4k words,</span> -->
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">4.4k words, 15 mins</span>
+		<!-- <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读：15 mins</span> -->
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><img src="/assets/cloud-computing.jpeg" alt="img"></p>
+<h2 id="参考文献">参考文献</h2>
+<ul>
+<li>
+<p><strong>《Edge Computing: Vision and Challenges》</strong></p>
+<ul>
+<li>IEEE INTERNET OF THINGS JOURNAL, VOL. 3, NO. 5, OCTOBER 2016</li>
+</ul>
+</li>
+<li>
+<p><strong>边缘云计算技术及标准化白皮书（2018）</strong> - 中国电子技术标准化研究</p>
+<ul>
+<li>阿里云计算有限公司 中国电子技术标准化研究院 等 2018 年 12 月 12 日联合发布</li>
+</ul>
+</li>
+<li>
+<p>**《基于个人计算机的智能家居边缘计算系统》**计算机学报，上海交通大学 计算机科学与工程系</p>
+</li>
+</ul>
+<h2 id="一-引言">一、引言</h2>
+<h3 id="1-it-3-0-时代会发生什么？">1. IT 3.0 时代会发生什么？</h3>
+<ul>
+<li>很久之前，<strong>电力 1.0 时代</strong>，想要用电，需要自己买发电机</li>
+<li>不久之前，<strong>电力 2.0 时代</strong>，有了电网，想要用电，直接从电网购买即可，用多少买多少</li>
+<li>当今，<strong>电力 3.0 时代</strong>，在很多发达国家，不少用户家里安装了太阳能板，有些可以电力自给自足，有些甚至有富裕，可以把电反哺电网，赚取收入</li>
+</ul>
+<p>如果你混迹于 IT 圈子，你会发现类似的现象：</p>
+<ul>
+<li>不久之前，<strong>IT 1.0 时代</strong>，每个公司想要处理数据，要自备机房，自己买服务器</li>
+<li>现如今，<strong>IT 2.0 时代</strong>，有了云计算，公司直接购买云服务器和云计算力即可，用多少买多少</li>
+<li>即将到来的 <strong>IT 3.0 时代</strong>，你觉得会发生什么？</li>
+</ul>
+<p>闲散的计算力收集和再利用，形成雾计算！</p>
+<p>云计算是可配置计算机资源和更高级别服务的共享池，可以通过最少的管理工作快速配置（一般是用互联网）；</p>
+<p>其实，云计算你可以理解为资源共享池。举个例子就是，我有很多东西，家里放不下了，放到一个特定的地方存着，随时提取，别人碰不了，保质保量。</p>
+<p><img src="/assets/image-20190313232354690.png" alt="image-20190313232354690"></p>
+<p>华为《GIV2025 打开智能世界产业版图》白皮书</p>
+<h3 id="2-cloud-fog-and-edge-computing-what-s-the-difference">2. Cloud, Fog and Edge Computing – What’s the Difference?</h3>
+<h4 id="实践场景">实践场景</h4>
+<p><img src="/assets/201712281422260032.jpg" alt="img"></p>
+<h5 id="智慧城市">智慧城市</h5>
+<p>如果将智能家居的应用场景放大到一个社区或城市，将在公共安全、健康数据、公共设施、交通运输等众多细分领域产生极大的应用价值。这里应用边缘计算的初衷更多是出于成本和效率考虑，<strong>在一个八百万人口规模的城市，每小时产生的数据量可能达到 100PB，采用传统云计算处理方式将给网络带宽带来极大的压力</strong>，城市各角落的边缘设备实时处理和收集数据将带来效率上的极大提升。</p>
+<p><img src="/assets/rHBc-fyhfxph3128092.jpg" alt="img"></p>
+<h5 id="自动驾驶技术与智能交通">自动驾驶技术与智能交通</h5>
+<p>在自动驾驶领域，边缘计算至关重要，因为**自动驾驶汽车上数百个传感器每小时将产生 40TB 的数据量。**从安全性的角度而不是从成本的角度考虑，数据的处理必须实时完成，当遇到紧急情况时，比如汽车前方突然出现踢球玩耍的小孩，这时自动驾驶系统必须依赖实时高效的边缘计算给予决策支持，并作出应急处理：刹车！</p>
+<p><img src="/assets/cloud-fog-edge.png" alt="cloud-fog-edge"></p>
+<p><img src="/assets/cloud-fog-edge_infographic.jpg" alt="Cloud computing vs Edge or Fog Computing - an infographic"></p>
+<h4 id="云计算-cloud-computing">云计算（Cloud Computing）</h4>
+<p>云计算（英语：cloud computing），是一种基于互联网的计算方式，通过这种方式，共享的软硬件资源和信息可以按需求提供给计算机各种终端和其他设备。</p>
+<h4 id="边缘计算-edge-computing">边缘计算（Edge Computing）</h4>
+<p>Edge computing—also known as just “edge”—brings processing close to the data source, and it does not need to be sent to a remote cloud or other centralized systems for processing. By eliminating the distance and time it takes to send data to centralized sources, we can improve the speed and performance of data transport, as well as devices and applications on the edge.</p>
+<blockquote>
+<p>在科技飞速发展的今天，物联网已经成为公共云上运行的关键工作负载之一。**虽然现在云端物联网价值很大，但数据延迟和宽带消耗时它面临的最大问题。**毕竟现在这个时代，时间既金钱。为了解决这个问题，边缘计算应运而生。<strong>当有了边缘设备来充当“端”和“云”之间的中介，即可通过云的物联网来控制平面，从而进行更加集中化的管理。</strong></p>
+<p>举一个不太恰当，但能帮助理解的例子。把云端比作班主任，班主任很厉害吧。但一个班四五十个人，如果事无巨细的由班主任来决定，浪费时间还效率不高。这时各个班委出现了。选择一些有独立处理班级事务能力的同学，来分摊全班的事务。效率提升了不说，也减轻了班主任的负担。边缘计算就好比这些班委。帮云计算分担那些边缘的问题，从而起到省时省力的作用。</p>
+<p>用人体神经举个例子，云计算就是身体所有反应都需要经过大脑处理后作出。而边缘计算就是由神经条件反射。</p>
+</blockquote>
+<h4 id="雾计算-fog-computing">雾计算（Fog Computing）</h4>
+<p>Fog computing is a standard that defines how edge computing should work, and it facilitates the operation of compute, storage and networking services between end devices and cloud computing data centers. Additionally, many use fog as a jumping-off point for edge computing.</p>
+<blockquote>
+<p><strong>Fog computing, a term created by Cisco</strong>, also refers to extending computing to the edge of the network. Cisco introduced its fog computing in <strong>January 2014</strong> as a way to bring cloud computing capabilities to the edge of the network.</p>
+</blockquote>
+<h3 id="3-云计算是如何服务的">3. 云计算是如何服务的</h3>
+<p>说到这里不得不说一下云计算的服务和交付方式，就是大家常见的 IaaS、PaaS、SaaS。</p>
+<p><img src="/assets/img-pyramid.jpg" alt="Pyramid"></p>
+<h4 id="what-is-iaas">What is IaaS</h4>
+<p>IaaS 其实是 “Infrastructure as a service” 的英文缩写，翻译过来是 <strong>“基础设施作即服务”</strong>，为了方便使用就成为了 “IaaS”。</p>
+<p>IaaS 就是用户<strong>通过购买/租用云虚拟服务器来使用云服务的交付方式</strong>，现阶段的企业用户使用较少。</p>
+<h4 id="what-is-paas">What is PaaS</h4>
+<p>PaaS “Platform as a Service” <strong>平台即服务</strong>。云计算公司把应用服务的运行和开发环境作为服务提供给用户，用户可以在这个平台上开发自己的云。国内像<strong>阿里、华为、腾讯、金山云</strong>等公司都会提供这样的服务。</p>
+<h4 id="what-is-saas">What is SaaS</h4>
+<p>SaaS“Soft as a Service” <strong>软件即服务</strong>，云服务开发商通常将软件定位在云上，用户通过购买软件来使用云的一种交互方式。我们经常用到的<strong>钉钉、WPS 云办公</strong>等企业软件就是 SaaS 的一种表现形式。</p>
+<h3 id="4-私有云-公有云-混合云">4. 私有云、公有云、混合云</h3>
+<h4 id="私有云">私有云</h4>
+<p>私有云从字面意思上了解就是私有的云，用户自己开发或者是云计算公司为用户单独使用而开发的云就是私有云。私有云的开发成本很高，需具备一定的硬件和软件基础，但是安全性方面是三云中最高的。</p>
+<h4 id="共有云">共有云</h4>
+<p>公有云一般指大家都能用的云，一般来说会收取用户相对较少的费用或者免费使用。我们日常生活中，最常用的百度云盘、微信云等都是公有云，当然三大通讯运营商所使用的云也是公有云。方便是公有云最大的特点，安全性是公有云的不足。</p>
+<h4 id="混合云">混合云</h4>
+<p>混合云融合公有云和私有云，是未来云计算市场的发展趋势。企业客户既希望于将数据放在私有云上保持独立性和安全性，又希望借助公有云的平台实现资源的共享。混合云匹配私有云和公有云，既保证了安全也达到了节省成本，提高效率的目的，目前已经应用在医疗领域。</p>
+<h2 id="二-再谈边缘计算">二、再谈边缘计算</h2>
+<h3 id="1-引言">1. 引言</h3>
+<p>在聊边缘计算之前，我们先聊聊这个星球上最魔性的生物之一——章鱼。</p>
+<p><img src="/assets/v2-cba74bdb8ddd2ebb2a93eb6d244c0823_b.jpg" alt="img"></p>
+<p>具体来讲，边缘计算将数据的处理、应用程序的运行甚至一些功能服务的实现，由网络中心下放到网络边缘的节点上。</p>
+<p><img src="/assets/v2-9281e80bb6f9a93904e1e85765f9807d_hd.jpg" alt="img"></p>
+<p>一直以来，公共和企业设施的监测和维护消耗着大量的人力、物力成本；电力、制造等行业数字化转型中对海量数据的实时、智能处理也有着强烈需求。</p>
+<p>如果用常规模式构建物联网，随着设备的迅速增加，网络边缘侧所产生的数据量级将非常巨大。这些数据如果都交由云端的管理平台来处理，将会：</p>
+<p><img src="/assets/v2-07b7846425b54df30b4c24ac115f1c0c_b.jpg" alt="img"></p>
+<h3 id="2-什么是边缘计算">2. 什么是边缘计算</h3>
+<p>在网络边缘产生的数据正在逐步增加，如果我们能够在网络的边缘结点去处理、分析数据，那么这种计算模型会更高效。许多新的计算模型正在不断的提出，因为我们发现随着物联网的发展，云计算并不总是那么高效的。接下来文章中将会列出一些原因来证明为什么边缘计算能够比云计算更高效，更优秀。</p>
+<h3 id="3-为什么需要边缘计算">3. 为什么需要边缘计算</h3>
+<p><strong>云服务的推动</strong>：云中心具有强大的处理性能，能够处理海量的数据。但是，将海量的数据传送到云中心成了一个难题。<u>云计算模型的系统性能瓶颈在于网络带宽的有限性，传送海量数据需要一定的时间，云中心处理数据也需要一定的时间，这就会加大请求响应时间，用户体验极差</u>。</p>
+<p><strong>物联网的推动</strong>：现在几乎所有的电子设备都可以连接到互联网，这些电子设备会后产生海量的数据。<u>传统的云计算模型并不能及时有效的处理这些数据，在边缘结点处理这些数据将会带来极小的响应时间、减轻网络负载、保证用户数据的私密性。</u></p>
+<p><strong>终端设备的角色转变</strong>：终端设备大部分时间都在扮演数据消费者的角色，比如使用<u>智能手机观看爱奇艺、刷抖音等</u>。然而，现在智能手机让终端设备也有了生产数据的能力，比如在淘宝购买东西，在百度里搜索内容这些都是终端节点产生的数据。</p>
+<p>图 1 是传统云计算模型下，最左侧是服务提供者来提供数据，上传到云中心，终端客户发送请求到云中心，云中心响应相关请求并发送数据给终端客户。终端客户始终是消费者的角色。<br>
+图</p>
+<p><img src="/assets/20180707102820218.png" alt="è¿éåå¾çæè¿°"></p>
+<p>图1 云计算模型</p>
+<p><img src="/assets/20180707102858946.png" alt="è¿éåå¾çæè¿°"></p>
+<p>图2 边缘计算模型</p>
+<h3 id="4-边缘计算的优点">4. 边缘计算的优点</h3>
+<ul>
+<li>在人脸识别领域，<strong>响应时间由 900ms 减少为 169ms</strong></li>
+<li>把部分计算任务从云端卸载到边缘之后，整个系统对<strong>能源的消耗减少了 30%-40%</strong>。</li>
+<li>数据在整合、迁移等方面<strong>可以减少 20 倍的时间</strong>。</li>
+</ul>
+<p>TensorFlow.js  |  TensorFlow<br>
+<a href="https://www.tensorflow.org/js/demos" target="_blank" rel="noopener">https://www.tensorflow.org/js/demos</a></p>
+<p><img src="/assets/image-20190314095517702.png" alt="image-20190314095517702"></p>
+<p><img src="/assets/image-20190314095942979.png" alt="image-20190314095942979"></p>
+<h2 id="三-边缘智能：基于边缘计算的深度学习模型推断加速方法">三、边缘智能：基于边缘计算的深度学习模型推断加速方法</h2>
+<h3 id="生态">生态</h3>
+<p>产业三分天下，拥有终端、算法、算力者通吃</p>
+<p>目前，<strong>边缘智能产业生态架构已形成</strong>，主要有三类玩家：</p>
+<p>第一类：<strong>算法玩家</strong>。从算法切入，如提供计算机视觉算法、NLP算法等。</p>
+<p>第二类：<strong>终端玩家</strong>。从硬件切入，如提供手机、PC等智能硬件。</p>
+<p>第三类：<strong>算力玩家</strong>。从终端芯片切入，如开发用于边缘计算的AI芯片等。</p>
+<p><img src="/assets/ulqfm10n0e.jpeg" alt="img"></p>
+<h3 id="研究背景">研究背景</h3>
+<p>作为人工智能领域的当红炸子鸡，深度学习技术近年来得到了学术界与产业界的大力追捧。目前，深度学习技术已在计算机视觉、自然语言处理以及语音识别等领域大放异彩，相关产品正如雨后春笋般涌现。**由于深度学习模型需要进行大量的计算，因此基于深度学习的智能通常只存在于具有强大计算能力的云计算数据中心。**考虑到当下移动终端设备的高度普及，如何将深度学习模型高效地部署在资源受限的终端设备，从而使得智能更加贴近用户这一问题以及引起了学术界与工业界的高度关注。针对这一难题，<strong>边缘智能（Edge Intelligence）技术通过协同终端设备与边缘服务器，来整合二者的计算本地性与强计算能力的互补性优势，从而达到显著降低深度学习模型推理的延迟与能耗的目的。</strong></p>
+<p><img src="/assets/1p5anqale5.jpeg" alt="img"></p>
+<p>图1. 基于终端设备与边缘服务器协同的深度学习推断</p>
+<p>边缘智能的核心研究问题在于如何在资源受限的边缘端高效部署深度学习模型，其中包括边缘设备深度学习模型优化，深度学习计算迁移，边缘服务器与终端设备间的协同调度等问题。</p>
+<h3 id="研究问题">研究问题</h3>
+<p>对于常见的常见的深度学习模型，如深度卷积神经网络 CNN，是由多层神经网络相互叠加而成。由于不同网络层的计算资源需求以及输出数据量都具有显著的差异性，那么一个直观的想法是将整个深度学习模型切分成两部分，其中计算量大的一部分卸载到边缘端服务器进行计算，而计算量小的一部分则保留在终端设备本地计算，如图 2 所示。显然，上述终端设备与边缘服务器协同推断的方法能有效降低深度学习模型的推断时延。<strong>然而，选择不同的模型切分点降导致不同的计算时间，我们需要选择最佳的模型切分点从而最大化发挥终端与边缘协同的优势。</strong></p>
+<p><img src="/assets/7snzcywmne.jpeg" alt="img"></p>
+<p>图2. 边缘服务器与终端设备协同推理示例</p>
+<p>除了对模型进行切分（DNN partitioning），加速深度学习模型推断的另一手段为**模型精简（DNN right-sizing），即选择完成时间更快的“小模型”，而非对资源需求更高的“大模型”。**如图 3 所示，对于任意深度学习任务，我们可以离线训练具有多个退出点的分支网络，其中，退出点越靠后，模型越“大”， 准确率也越高但相应地推断时延越大。因此，当深度学习任务的完成时间比较紧迫时，我们可以选择适当地牺牲模型的精确度来换取更优的性能（即时延）。值得注意的是，此时我们需要谨慎权衡性能与精度之间的折衷关系（tradeoff）。</p>
+<p><img src="/assets/j8oahdah3t.jpeg" alt="img"></p>
+<p>图3. 具有多个退出点的深度学习分支网络</p>
+<p>综合运用上述<strong>模型切分</strong>和<strong>模型精简</strong>等两种调节深度学习模型推断时间的优化手段，并小心权衡由此引发的性能与精度之间的折衷关系，本文定义如下研究问题：<strong>对于给定时延需求的深度学习任务，如何联合优化模型切分和模型精简这两个决策，从而使得在不违反时延需求的同时最大化深度学习模型的精确度。</strong></p>
+<h3 id="研究结果">研究结果</h3>
+<p>针对上述问题，我们提出了基于边缘与终端协同的深度学习模型运行时优化框架Edgent。如图4所示，Edgent 的优化逻辑分为三个阶段：<strong>离线训练阶段</strong>，<strong>在线优化阶段</strong>以及<strong>协同推断阶段</strong>。</p>
+<p>首先，在<strong>离线训练阶段</strong>，Edgent训练深度学习任务对应的分支网络，并生成回归模型来预测分支网络中不同网络层在边缘服务器以及在终端设备上的计算时间。其次，在<strong>在线优化阶段</strong>，Edgent实时测量当前移动终端与边缘服务器之间链路的网络带宽，以便于估算移动终端与边缘服务器间的数据传输时延。紧接着，Edgent沿着尺寸从大到小的网络分支（如图3中从右至左的5个网络分支），依次遍历每个网络分支上不同的切分点，并基于当前网络带宽和不同网络层计算时间估算所选网络分支与切分点对应的端到端延迟与模型精确度。在遍历完所有的分支网络与切分点后，Edgent输出满足时延需求的所有网络分支与切分点组合中具有最大精确度的一个组合。最后，在协同推断阶段，根据上述在线优化阶段所输出的最优网络分支与切分点组合，边缘服务器与移动终端对深度学习模型进行协同推断。</p>
+<p><img src="/assets/22f2kcn3e4.jpeg" alt="img"></p>
+<p>图4. 基于边缘与终端协同的深度学习模型运行时优化框架 Edgent</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://baijiahao.baidu.com/s?id=1615893731162307198&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">什么是云？3分钟带你走进云计算世界</a></li>
+<li><a href="https://www.winsystems.com/cloud-fog-and-edge-computing-whats-the-difference/" target="_blank" rel="noopener">Cloud Computing - Fog Computing &amp; Edge Computing: What’s the Difference?</a></li>
+<li><a href="https://www.cisco.com/c/en/us/solutions/enterprise-networks/edge-computing.html" target="_blank" rel="noopener">边缘计算与雾计算：定义和企业用途 - 思科</a></li>
+<li><a href="https://cloud.tencent.com/developer/news/305071" target="_blank" rel="noopener">边缘智能：基于边缘计算的深度学习模型推断加速方法 - 云+社区 - 腾讯云</a></li>
+<li><a href="https://www.huawei.com/minisite/giv/cn/download/whitebookcn.pdf" target="_blank" rel="noopener">华为《GIV2025打开智能世界产业版图》白皮书</a></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.frankfeekr.cn/2019/05/24/Edge-Computing-and-Edge-Intelligence/" title="Edge Computing and Edge Intelligence" target="_blank" rel="external">http://www.frankfeekr.cn/2019/05/24/Edge-Computing-and-Edge-Intelligence/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/frank-lam" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/avatar2.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/frank-lam" target="_blank"><span class="text-dark">Frank</span><small class="ml-1x">from zero to hero</small></a></h3>
+        <div>潜伏在黎明之前，混迹于互联网江湖。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/05/27/如何选择自己的技术栈/" title="如何选择自己的技术栈"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/05/24/虚拟化技术变迁/" title="虚拟化技术的变迁"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/img/donate/alipay.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/img/donate/wechat.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        
+        <div class="publishby">
+            <!-- <span id="busuanzi_container_site_pv">访问量：<span id="busuanzi_value_site_pv"></span>次</span><br/> -->
+            <!-- frank_lin@whu.edu.cn <br /> -->
+            <!-- fullstack-tutorial -->
+            <!-- <br> -->
+            <iframe style="height: 20px !important;" frameborder="0" scrolling="0" width="120px" height="20px" src="https://ghbtns.com/github-btn.html?user=frank-lam&repo=fullstack-tutorial&type=star&count=true">
+            </iframe><br>
+            <!-- <p id="about_51la">
+                <script type="text/javascript" src="//quote.51.la/q?id=19985869&mb=4"></script>
+            </p> -->
+            <p>
+                <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> </span>
+                <br>
+                <a href="https://beian.miit.gov.cn" target="_blank" style="border-bottom: 1px dashed #ffffffbf;">浙ICP备2021008991号</a>
+            </p>
+            <!-- Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>. -->
+        </div>
+    </div>
+    <script>
+        // setTimeout(function () {
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        // }, 1000);
+
+        do {
+            console.log("loading 51.la");
+        }
+        while (document.getElementById("about_51la").length == 1) {
+            setTimeout(function () {
+                $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+                $('#about_51la a').remove()
+
+            }, 500);
+            // $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+            // $('#about_51la a').remove()
+        }
+        // while ($('#about_51la').length == 1) {
+
+        // }
+
+        // setTimeout(function(){
+        //     console.log($('#about_51la').length);
+        //     if($('#about_51la p')){
+        //         alert("exist");
+        //     }
+        //     else{
+        //         alert("not exist");
+        //     }
+        //     console.log($('#about_51la span'));
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        //  }, 2000);
+
+    </script>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script async src="https://cdn.jsdelivr.net/gh/frank-lam/hexo-blog-site/js/busuanzi.pure.mini.js"></script> -->
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '321c793b57e48017d3d6',
+    clientSecret: '525a416540a4b84efca2e7cdf218edddcd7c2b00',
+    repo: 'hexo-blog-gitalk',
+    owner: 'frank-lam',
+    admin: ['frank-lam'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      if ($(this).hasClass('nofancybox')) return;
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>

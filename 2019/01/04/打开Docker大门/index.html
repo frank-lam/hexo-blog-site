@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>打开 Docker 大门 | Frank&#39;s 技术世界</title>
+  <meta name="description" content="一、Docker 快速入门 A simple, interactive and fun playground to learn Docker：Play with Docker 初探 Docker 什么是 Docker Docker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云服务技术的一次革新，并于 20">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打开 Docker 大门">
+<meta property="og:url" content="http://www.frankfeekr.cn/2019/01/04/打开Docker大门/index.html">
+<meta property="og:site_name" content="Frank&#39;s 技术世界">
+<meta property="og:description" content="一、Docker 快速入门 A simple, interactive and fun playground to learn Docker：Play with Docker 初探 Docker 什么是 Docker Docker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云服务技术的一次革新，并于 20">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/VMs-and-Containers-20190419093735434.jpg">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/docker-architecture-20190419093817925.png">
+<meta property="og:image" content="http://www.frankfeekr.cn/assets/docker-cmd-20190419094358952.png">
+<meta property="og:updated_time" content="2021-10-23T14:22:52.651Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="打开 Docker 大门">
+<meta name="twitter:description" content="一、Docker 快速入门 A simple, interactive and fun playground to learn Docker：Play with Docker 初探 Docker 什么是 Docker Docker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云服务技术的一次革新，并于 20">
+<meta name="twitter:image" content="http://www.frankfeekr.cn/assets/VMs-and-Containers-20190419093735434.jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.frankfeekr.cn/2019/01/04/打开Docker大门/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Frank&#39;s 技术世界" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/frank-lam" target="_blank">
+          <img class="img-circle img-rotate" src="/img/avatar2.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Frank</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">from zero to hero</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou</small><br>
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"> 潜伏在黎明之前，混迹于互联网江湖。</small><br> -->
+
+        <!-- <span class="article-read hidden-xs">
+            <i class="icon icon-eye-fill" aria-hidden="true"></i>
+            <span id="busuanzi_container_page_pv">
+            <span id="busuanzi_value_page_pv">0</span>
+          </span>
+        </span> -->
+
+        <!-- <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-location-arrow"></i> frank_lin@whu.edu.cn</small> -->
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-lintools">
+          <a href="/lintools">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">在线导航</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/tools">
+            
+            <i class="icon icon-shu"></i>
+            
+            <span class="menu-title">四次元ポケット</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-author">
+          <a href="/author">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">作者</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    </nav>
+    <!-- <script type="text/javascript" src="//js.users.51.la/19985869.js"></script> -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?9f90fd773669c197e7a4b7827da87a13";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+      </script>
+      
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <img src="/assets/weixin/qrcode.png" style="width:80%;margin-left:11%;"> <p style="text-align:center;">微信订阅号：全栈开发社区<br>fullstack tutorial developer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/influxdb/">influxdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill-tree/">skill-tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ss/">ss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习宝典/">学习宝典</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发工具/">开发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术世界/">技术世界</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库结构与算法/">数据库结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂文/">杂文</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校招/">校招</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13px;">HTTP</a> <a href="/tags/IDEA/" style="font-size: 13px;">IDEA</a> <a href="/tags/Linux/" style="font-size: 13.5px;">Linux</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/influxdb/" style="font-size: 13px;">influxdb</a> <a href="/tags/skill-tree/" style="font-size: 13px;">skill-tree</a> <a href="/tags/ss/" style="font-size: 13px;">ss</a> <a href="/tags/内网穿透/" style="font-size: 13px;">内网穿透</a> <a href="/tags/前端/" style="font-size: 13px;">前端</a> <a href="/tags/学习宝典/" style="font-size: 13px;">学习宝典</a> <a href="/tags/开发工具/" style="font-size: 13.5px;">开发工具</a> <a href="/tags/技术世界/" style="font-size: 13.5px;">技术世界</a> <a href="/tags/数据库结构与算法/" style="font-size: 13px;">数据库结构与算法</a> <a href="/tags/杂文/" style="font-size: 13.5px;">杂文</a> <a href="/tags/校招/" style="font-size: 14px;">校招</a> <a href="/tags/深度学习/" style="font-size: 13px;">深度学习</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/25/java-regular-group/" class="title">Java 正则表达式的命名捕获组</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-25T08:45:04.000Z" itemprop="datePublished">2021-09-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/05/16/docs-tutorial/" class="title">开发者如何编写优雅的技术文档 —— 手把手教你编写极致的文档</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-05-16T14:05:37.000Z" itemprop="datePublished">2021-05-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/github-speed-up/" class="title">一行命令实现 Github 国内镜像加速</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T13:47:11.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/let-is-encrypt-cerbot-for-https/" class="title">使用 Certbot 为网站签发永久免费的 HTTPS 证书</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-28T11:01:10.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/31/about-campus-apply/" class="title">关于校招，你必须了解的那些事</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-31T08:19:49.000Z" itemprop="datePublished">2020-05-31</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-docker-快速入门"><span class="toc-number">1.</span> <span class="toc-text">一、Docker 快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#初探-docker"><span class="toc-number">1.1.</span> <span class="toc-text">初探 Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是-docker"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是 Docker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要使用-docker"><span class="toc-number">1.1.2.</span> <span class="toc-text">为什么要使用 Docker</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#centos-7-安装-docker"><span class="toc-number">1.2.</span> <span class="toc-text">CentOS 7 安装 Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-镜像加速器"><span class="toc-number">1.3.</span> <span class="toc-text">Docker 镜像加速器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-常用命令"><span class="toc-number">1.4.</span> <span class="toc-text">Docker 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-启动-停止-重启服务"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 启动、停止、重启服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-拉取一个镜像-启动容器"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 拉取一个镜像，启动容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-启动的容器列表"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 启动的容器列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-查看所有的容器"><span class="toc-number">1.4.4.</span> <span class="toc-text">4. 查看所有的容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-启动-停止-重启某个容器"><span class="toc-number">1.4.5.</span> <span class="toc-text">5. 启动、停止、重启某个容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-查看指定容器的日志记录"><span class="toc-number">1.4.6.</span> <span class="toc-text">6. 查看指定容器的日志记录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-删除某个容器-若正在运行-需要先停止"><span class="toc-number">1.4.7.</span> <span class="toc-text">7. 删除某个容器，若正在运行，需要先停止</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-删除容器"><span class="toc-number">1.4.8.</span> <span class="toc-text">8. 删除容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-删除镜像"><span class="toc-number">1.4.9.</span> <span class="toc-text">9. 删除镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-删除虚悬镜像"><span class="toc-number">1.4.10.</span> <span class="toc-text">10. 删除虚悬镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-镜像导入与导出"><span class="toc-number">1.4.11.</span> <span class="toc-text">11. 镜像导入与导出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12-如何查看镜像和容器的占用空间"><span class="toc-number">1.4.12.</span> <span class="toc-text">12. 如何查看镜像和容器的占用空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#13-清理容器和镜像"><span class="toc-number">1.4.13.</span> <span class="toc-text">13. 清理容器和镜像</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-docker-环境下服务器的磁盘如何分区"><span class="toc-number">2.</span> <span class="toc-text">二、Docker 环境下服务器的磁盘如何分区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-docker-file-镜像构建"><span class="toc-number">3.</span> <span class="toc-text">三、Docker File 镜像构建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四-docker-compose"><span class="toc-number">4.</span> <span class="toc-text">四、Docker Compose</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-命令安装-方法一"><span class="toc-number">4.1.</span> <span class="toc-text">docker-compose 命令安装(方法一)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-命令安装-方法二"><span class="toc-number">4.2.</span> <span class="toc-text">docker-compose 命令安装(方法二)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-安装-python-pip"><span class="toc-number">4.2.1.</span> <span class="toc-text">1. 安装 python-pip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-安装-docker-compose"><span class="toc-number">4.2.2.</span> <span class="toc-text">2. 安装 Docker-Compose</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-yml-规范"><span class="toc-number">4.3.</span> <span class="toc-text">docker-compose.yml 规范</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五-docker-实战"><span class="toc-number">5.</span> <span class="toc-text">五、Docker 实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实战1：快速搭建-mysql"><span class="toc-number">5.1.</span> <span class="toc-text">实战1：快速搭建 MySQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实战2：快速搭建-phpmyadmin"><span class="toc-number">5.2.</span> <span class="toc-text">实战2：快速搭建 phpMyAdmin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实战3：快速搭建-gitlab"><span class="toc-number">5.3.</span> <span class="toc-text">实战3：快速搭建 GitLab</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-打开Docker大门" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      打开 Docker 大门
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/01/04/打开Docker大门/" class="article-date">
+	  <time datetime="2019-01-03T16:36:55.000Z" itemprop="datePublished">2019-01-4 0:36:55</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/01/04/打开Docker大门/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<!-- <font color=#1a2433>🎯置顶</font> -->
+		<!-- <span>  </span>
+		<i class="icon icon-edit"></i> -->
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：3.2k words</span> -->
+	
+	
+		<span>  </span>
+		<i class="icon icon-time"></i>
+		<!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数：3.2k words,</span> -->
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">3.2k words, 13 mins</span>
+		<!-- <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读：13 mins</span> -->
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="一-docker-快速入门">一、Docker 快速入门</h2>
+<p>A simple, interactive and fun playground to learn Docker：<a href="https://labs.play-with-docker.com/" target="_blank" rel="noopener">Play with Docker</a></p>
+<h3 id="初探-docker">初探 Docker</h3>
+<h4 id="什么是-docker">什么是 Docker</h4>
+<p>Docker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云服务技术的一次革新，并于 <a href="https://en.wikipedia.org/wiki/Docker_(software)" target="_blank" rel="noopener">2013 年 3 月以 Apache 2.0 授权协议开源</a>，主要项目代码在 <a href="https://github.com/moby/moby" target="_blank" rel="noopener">GitHub</a> 上进行维护。Docker 项目后来还加入了 Linux 基金会，并成立推动 <a href="https://www.opencontainers.org/" target="_blank" rel="noopener">开放容器联盟（OCI）</a>。</p>
+<p>Docker 自开源后受到广泛的关注和讨论，至今其 GitHub 项目已经超过 4 万 6 千个星标和一万多个 fork。甚至由于 Docker 项目的火爆，在 2013 年底，<a href="https://blog.docker.com/2013/10/dotcloud-is-becoming-docker-inc/" target="_blank" rel="noopener">dotCloud 公司决定改名为 Docker</a>。Docker 最初是在 Ubuntu 12.04 上开发实现的；Red Hat 则从 RHEL 6.5 开始对 Docker 进行支持；Google 也在其 PaaS 产品中广泛应用 Docker。</p>
+<p>Docker 使用 Google 公司推出的 <a href="https://golang.org/" target="_blank" rel="noopener">Go 语言</a> 进行开发实现，基于 Linux 内核的 <a href="https://zh.wikipedia.org/wiki/Cgroups" target="_blank" rel="noopener">cgroup</a>，<a href="https://en.wikipedia.org/wiki/Linux_namespaces" target="_blank" rel="noopener">namespace</a>，以及 <a href="https://en.wikipedia.org/wiki/Aufs" target="_blank" rel="noopener">AUFS</a> 类的 <a href="https://en.wikipedia.org/wiki/Union_mount" target="_blank" rel="noopener">Union FS</a> 等技术，对进程进行封装隔离，属于 <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization" target="_blank" rel="noopener">操作系统层面的虚拟化技术</a>。由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。最初实现是基于 <a href="https://linuxcontainers.org/lxc/introduction/" target="_blank" rel="noopener">LXC</a>，从 0.7 版本以后开始去除 LXC，转而使用自行开发的 <a href="https://github.com/docker/libcontainer" target="_blank" rel="noopener">libcontainer</a>，从 1.11 开始，则进一步演进为使用 <a href="https://github.com/opencontainers/runc" target="_blank" rel="noopener">runC</a> 和 <a href="https://github.com/containerd/containerd" target="_blank" rel="noopener">containerd</a>。</p>
+<p>Docker 在容器的基础上，进行了进一步的封装，从文件系统、网络互联到进程隔离等等，极大的简化了容器的创建和维护。使得 Docker 技术比虚拟机技术更为轻便、快捷。</p>
+<p>下面的图片比较了 Docker 和传统虚拟化方式的不同之处。传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程；而容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。</p>
+<p><img src="/assets/VMs-and-Containers-20190419093735434.jpg" alt="img"></p>
+<h4 id="为什么要使用-docker">为什么要使用 Docker</h4>
+<p><img src="/assets/docker-architecture-20190419093817925.png" alt="Docker architecture"></p>
+<p>作为一种新兴的虚拟化方式，Docker 跟传统的虚拟化方式相比具有众多的优势。</p>
+<p><strong>更高效的利用系统资源</strong></p>
+<p>由于容器不需要进行硬件虚拟以及运行完整操作系统等额外开销，Docker 对系统资源的利用率更高。无论是应用执行速度、内存损耗或者文件存储速度，都要比传统虚拟机技术更高效。因此，相比虚拟机技术，一个相同配置的主机，往往可以运行更多数量的应用。</p>
+<p><strong>更快速的启动时间</strong></p>
+<p>传统的虚拟机技术启动应用服务往往需要数分钟，而 Docker 容器应用，由于直接运行于宿主内核，无需启动完整的操作系统，因此可以做到秒级、甚至毫秒级的启动时间。大大的节约了开发、测试、部署的时间。</p>
+<p><strong>一致的运行环境</strong></p>
+<p>开发过程中一个常见的问题是环境一致性问题。由于开发环境、测试环境、生产环境不一致，导致有些 bug 并未在开发过程中被发现。而 Docker 的镜像提供了除内核外完整的运行时环境，确保了应用运行环境一致性，从而不会再出现 <em>「这段代码在我机器上没问题啊」</em> 这类问题。</p>
+<p><strong>持续交付和部署</strong></p>
+<p>对开发和运维（<a href="https://zh.wikipedia.org/wiki/DevOps" target="_blank" rel="noopener">DevOps</a>）人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。</p>
+<p>使用 Docker 可以通过定制应用镜像来实现持续集成、持续交付、部署。开发人员可以通过 <code>Dockerfile</code> 来进行镜像构建，并结合 <a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank" rel="noopener">持续集成(Continuous Integration)</a> 系统进行集成测试，而运维人员则可以直接在生产环境中快速部署该镜像，甚至结合 <a href="https://en.wikipedia.org/wiki/Continuous_delivery" target="_blank" rel="noopener">持续部署(Continuous Delivery/Deployment)</a> 系统进行自动部署。</p>
+<p>而且使用 <code>Dockerfile</code> 使镜像构建透明化，不仅仅开发团队可以理解应用运行环境，也方便运维团队理解应用运行所需条件，帮助更好的生产环境中部署该镜像。</p>
+<p><strong>更轻松的迁移</strong></p>
+<p>由于 Docker 确保了执行环境的一致性，使得应用的迁移更加容易。Docker 可以在很多平台上运行，无论是物理机、虚拟机、公有云、私有云，甚至是笔记本，其运行结果是一致的。因此用户可以很轻易的将在一个平台上运行的应用，迁移到另一个平台上，而不用担心运行环境的变化导致应用无法正常运行的情况。</p>
+<p><strong>更轻松的维护和扩展</strong></p>
+<p>Docker 使用的分层存储以及镜像的技术，使得应用重复部分的复用更为容易，也使得应用的维护更新更加简单，基于基础镜像进一步扩展镜像也变得非常简单。此外，Docker 团队同各个开源项目团队一起维护了一大批高质量的 <a href="https://store.docker.com/search?q=&amp;source=verified&amp;type=image" target="_blank" rel="noopener">官方镜像</a>，既可以直接在生产环境使用，又可以作为基础进一步定制，大大的降低了应用服务的镜像制作成本。</p>
+<p><strong>对比传统虚拟机总结</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>容器</th>
+<th>虚拟机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动</td>
+<td>秒级</td>
+<td>分钟级</td>
+</tr>
+<tr>
+<td>硬盘使用</td>
+<td>一般为 <code>MB</code></td>
+<td>一般为 <code>GB</code></td>
+</tr>
+<tr>
+<td>性能</td>
+<td>接近原生</td>
+<td>弱于</td>
+</tr>
+<tr>
+<td>系统支持量</td>
+<td>单机支持上千个容器</td>
+<td>一般几十个</td>
+</tr>
+</tbody>
+</table>
+<h3 id="centos-7-安装-docker">CentOS 7 安装 Docker</h3>
+<ol>
+<li>先更新 yum 软件管理器，然后再安装 Docker</li>
+</ol>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">[root</span>@localhost /] yum -y <span class="keyword">update</span></span><br><span class="line"><span class="built_in">[root</span>@localhost /] yum install -y docker</span><br></pre></td></tr></table></figure>
+<p>说明：上述 <code>-y</code> 代表选择程序安装中的 yes 选项</p>
+<p>或是，直接安装</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> docker</span><br></pre></td></tr></table></figure>
+<ol>
+<li>验证安装，查看 Docker 版本信息</li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@localhost</span> /] docker -v</span><br><span class="line">Docker version <span class="number">1.13</span><span class="number">.1</span>, build <span class="number">8633870</span>/<span class="number">1.13</span><span class="number">.1</span></span><br><span class="line">You have <span class="keyword">new</span> mail <span class="keyword">in</span> <span class="regexp">/var/</span>spool<span class="regexp">/mail/</span>root</span><br></pre></td></tr></table></figure>
+<ol>
+<li>启动 / 重启 / 关闭 Docker</li>
+</ol>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">[root</span>@localhost /] docker <span class="keyword">start</span></span><br><span class="line"><span class="built_in">[root</span>@localhost /] docker restart</span><br><span class="line"><span class="built_in">[root</span>@localhost /] docker stop</span><br></pre></td></tr></table></figure>
+<p>【意外情况】service docker start 无法启动问题</p>
+<ul>
+<li>
+<p>centos 安装 docker 显示 No package docker available，原因是 yum 没有找到 docker 的包，需要 epel 第三方软件库，运行下面的命令</p>
+<p><code>sudo yum install epel-release</code></p>
+</li>
+<li>
+<p><a href="http://www.cnblogs.com/ECJTUACM-873284962/p/9362840.html" target="_blank" rel="noopener">【亲测有效】Centos安装完成docker后启动docker报错docker</a></p>
+</li>
+</ul>
+<ol>
+<li>
+<p>配置yum源</p>
+<p>vim /etc/yum.repos.d/docker.repo</p>
+</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dockerrepo]</span></span><br><span class="line"><span class="attr">name</span>=Docker Repository</span><br><span class="line"><span class="attr">baseurl</span>=https://yum.dockerproject.org/repo/main/centos/<span class="variable">$releasever</span>/</span><br><span class="line"><span class="attr">enabled</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">gpgcheck</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">gpgkey</span>=https://yum.dockerproject.org/gpg</span><br></pre></td></tr></table></figure>
+<ol>
+<li>通过yum安装</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install docker-engine</span><br><span class="line">service docker start</span><br><span class="line">service docker status</span><br></pre></td></tr></table></figure>
+<ol>
+<li>日志</li>
+</ol>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /<span class="built_in">var</span>/<span class="built_in">log</span>/docker</span><br></pre></td></tr></table></figure>
+<p>在 Ubuntu 16.04 LTS 上 离线安装 Docker / Docker-compose - TonyZhang24 - 博客园<a href="https://www.cnblogs.com/atuotuo/p/9272368.html" target="_blank" rel="noopener">https://www.cnblogs.com/atuotuo/p/9272368.html</a></p>
+<h3 id="docker-镜像加速器">Docker 镜像加速器</h3>
+<ol>
+<li>
+<p>加速器服务</p>
+<p><a href="https://www.daocloud.io/mirror" target="_blank" rel="noopener">DaoCloud 加速器，一行命令，镜像万千</a></p>
+<p><a href="https://dev.aliyun.com/search.html" target="_blank" rel="noopener">阿里云 - 开发者平台 - 容器 hub</a></p>
+</li>
+<li>
+<p>配置 Docker 加速器</p>
+</li>
+</ol>
+<p>以 Linux 为例</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL http<span class="variable">s:</span>//<span class="built_in">get</span>.daocloud.io/daotools/set_mirror.<span class="keyword">sh</span> | <span class="keyword">sh</span> -s http://f1361db2.<span class="keyword">m</span>.daocloud.io</span><br></pre></td></tr></table></figure>
+<p>该脚本可以将 --registry-mirror 加入到你的 Docker 配置文件 /etc/docker/daemon.json 中。适用于 Ubuntu14.04、Debian、CentOS6 、CentOS7、Fedora、Arch Linux、openSUSE Leap 42.1，其他版本可能有细微不同。更多详情请访问文档。</p>
+<p>删除 /etc/docker/daemon.json 中最后一个逗号，重启 Docker 服务即可</p>
+<h3 id="docker-常用命令">Docker 常用命令</h3>
+<p><img src="/assets/docker-cmd-20190419094358952.png" alt="img"></p>
+<h4 id="1-启动-停止-重启服务">1. 启动、停止、重启服务</h4>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]##<span class="built_in"> service </span>docker restart</span><br><span class="line">Redirecting <span class="keyword">to</span> /bin/systemctl restart docker.service</span><br><span class="line">[root@localhost ~]##<span class="built_in"> service </span>docker stop</span><br><span class="line">Redirecting <span class="keyword">to</span> /bin/systemctl stop docker.service</span><br><span class="line">[root@localhost ~]##<span class="built_in"> service </span>docker start</span><br><span class="line">Redirecting <span class="keyword">to</span> /bin/systemctl start docker.service</span><br></pre></td></tr></table></figure>
+<h4 id="2-拉取一个镜像-启动容器">2. 拉取一个镜像，启动容器</h4>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker pull centos</span></span><br><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker run -it -v /centos_dir:/docker_dir --name biodwhu-1 centos</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>-i：允许我们对容器内的 (STDIN) 进行交互</li>
+<li>-t：在新容器内指定一个伪终端或终端</li>
+<li>-v：是挂在宿机目录， /centos_dir 是宿机目录，/docker_dir 是当前 Docker 容器的目录，宿机目录必须是绝对的。</li>
+<li>-p：端口映射</li>
+<li>–name：是给容器起一个名字，可省略，省略的话 docker 会随机产生一个名字</li>
+<li>–restart：always</li>
+</ul>
+<h4 id="3-启动的容器列表">3. 启动的容器列表</h4>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker ps</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-查看所有的容器">4. 查看所有的容器</h4>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment">## docker ps -a</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-启动-停止-重启某个容器">5. 启动、停止、重启某个容器</h4>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker start biodwhu-1</span></span><br><span class="line">biodwhu<span class="number">-1</span></span><br><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker stop biodwhu-2</span></span><br><span class="line">biodwhu<span class="number">-2</span></span><br><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker restart biodwhu-3</span></span><br><span class="line">biodwhu<span class="number">-3</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-查看指定容器的日志记录">6. 查看指定容器的日志记录</h4>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker logs -f biodwhu-1</span></span><br></pre></td></tr></table></figure>
+<h4 id="7-删除某个容器-若正在运行-需要先停止">7. 删除某个容器，若正在运行，需要先停止</h4>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]## docker rm biodwhu<span class="string">-1</span></span><br><span class="line"><span class="keyword">Error </span>response from daemon: You cannot remove a running container 2d48fc5b7c17b01e6247cbc012013306faf1e54f24651d5e16d6db4e15f92d33. Stop the container before attempting removal or use -f</span><br><span class="line">[root@localhost ~]## docker stop biodwhu<span class="string">-1</span></span><br><span class="line">biodwhu<span class="string">-1</span></span><br><span class="line">[root@localhost ~]## docker rm biodwhu<span class="string">-1</span></span><br><span class="line">biodwhu<span class="string">-1</span></span><br></pre></td></tr></table></figure>
+<h4 id="8-删除容器">8. 删除容器</h4>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## 删除某个容器</span><br><span class="line">[root@localhost ~]## docker rm f3b346204a39</span><br><span class="line"></span><br><span class="line">## 删除所有容器</span><br><span class="line">[root@localhost ~]## docker stop $(docker ps -a -q)</span><br><span class="line">[root@localhost ~]## docker rm $(docker ps -a -q)</span><br></pre></td></tr></table></figure>
+<h4 id="9-删除镜像">9. 删除镜像</h4>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">## 删除某个镜像</span><br><span class="line">[root@localhost ~]## docker rmi docker.io/mysql:<span class="number">5.6</span></span><br><span class="line"></span><br><span class="line">## 删除所有镜像</span><br><span class="line">[root@localhost ~]## docker rmi $(docker images -q)</span><br><span class="line"></span><br><span class="line">## 强制删除所有镜像</span><br><span class="line">[root@localhost ~]## docker rmi -f $(docker images -q)</span><br></pre></td></tr></table></figure>
+<h4 id="10-删除虚悬镜像">10. 删除虚悬镜像</h4>
+<p>我们在 build 镜像的过程中，可能会产生一些临时的不具有名称也没有作用的镜像他们的名称一般都是 <code>&lt;none&gt;</code> ,我们可以执行下面的命令将其清除掉：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]## docker rmi $(docker images -f <span class="string">"dangling=true"</span> -q)</span><br><span class="line">## 或者</span><br><span class="line">[root@localhost ~]## docker image prune -a -f</span><br></pre></td></tr></table></figure>
+<h4 id="11-镜像导入与导出">11. 镜像导入与导出</h4>
+<p>保存镜像</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker save a46c2a2722b9 &gt; /var/docker/images_save/mysql.tar.gz</span></span><br></pre></td></tr></table></figure>
+<p>加载镜像</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker load -i /var/docker/images_save/mysql.tar.gz</span></span><br></pre></td></tr></table></figure>
+<h4 id="12-如何查看镜像和容器的占用空间">12. 如何查看镜像和容器的占用空间</h4>
+<p><code>docker system df</code> 命令，类似于 Linux 上的 df 命令，用于查看 Docker 的磁盘使用情况:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost containers]# docker system df</span><br><span class="line">TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE</span><br><span class="line">Images              46                  18                  7.903 GB            6.735 GB (85%)</span><br><span class="line">Containers          18                  13                  16.94 MB            2.642 MB (15%)</span><br><span class="line">Local Volumes       56                  2                   521.9 MB            517.7 MB (99%)</span><br></pre></td></tr></table></figure>
+<h4 id="13-清理容器和镜像">13. 清理容器和镜像</h4>
+<p><code>docker system prune</code> 命令可以用于清理磁盘，删除关闭的容器、无用的数据卷和网络，以及虚悬镜像(即无tag的镜像)。<code>docker system prune -a</code> 命令清理得更加彻底，可以将没有容器使用 Docker 镜像都删掉。注意，这两个命令会把你暂时关闭的容器，以及暂时没有用到的 Docker 镜像都删掉了…所以使用之前一定要想清楚吶。</p>
+<h2 id="二-docker-环境下服务器的磁盘如何分区">二、Docker 环境下服务器的磁盘如何分区</h2>
+<h2 id="三-docker-file-镜像构建">三、Docker File 镜像构建</h2>
+<h2 id="四-docker-compose">四、Docker Compose</h2>
+<h3 id="docker-compose-命令安装-方法一">docker-compose 命令安装(方法一)</h3>
+<blockquote>
+<p>推荐使用这种方式来安装 <code>docker-compose</code> 更加简单。</p>
+</blockquote>
+<p>可以通过修改 URL 中的版本，自定义您需要的版本。</p>
+<ul>
+<li>Github源</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Daocloud镜像</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://get.daocloud.io/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose</span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<p>卸载</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm <span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>docker-compose</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参考资料：<a href="https://www.cnblogs.com/morang/p/9501223.html" target="_blank" rel="noopener">docker 及 docker-compose 的快速安装和简单使用 - 易墨 - 博客园</a></li>
+</ul>
+<h3 id="docker-compose-命令安装-方法二">docker-compose 命令安装(方法二)</h3>
+<p>Docker-Compose 是一个部署多个容器的简单但是非常必要的工具.</p>
+<p>安装 Docker-Compose 之前，请先安装 python-pip</p>
+<h4 id="1-安装-python-pip">1. 安装 python-pip</h4>
+<ol>
+<li>首先检查 Linux 有没有安装 python-pip 包，终端执行 pip -v</li>
+</ol>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## pip -V</span></span><br><span class="line">-bash: pip: command <span class="literal">not</span> found</span><br></pre></td></tr></table></figure>
+<ol>
+<li>没有 python-pip 包就执行命令</li>
+</ol>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## yum -y install epel-release</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>执行成功之后，再次执行</li>
+</ol>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## yum -y install python-pip</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>对安装好的 pip 进行升级</li>
+</ol>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## pip install --upgrade pip</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-安装-docker-compose">2. 安装 Docker-Compose</h4>
+<ol>
+<li>终端执行</li>
+</ol>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## pip install docker-compose</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>检查 docker-compose 安装</li>
+</ol>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta">## docker-compose -version</span></span><br></pre></td></tr></table></figure>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://www.cnblogs.com/YatHo/p/7815400.html" target="_blank" rel="noopener">CentOS7下安装Docker-Compose - YatHo - 博客园</a></li>
+</ul>
+<h3 id="docker-compose-yml-规范">docker-compose.yml 规范</h3>
+<h2 id="五-docker-实战">五、Docker 实战</h2>
+<h3 id="实战1：快速搭建-mysql">实战1：快速搭建 MySQL</h3>
+<ul>
+<li>
+<p>官方镜像仓库</p>
+<p><a href="https://hub.docker.com/_/mysql/" target="_blank" rel="noopener">https://hub.docker.com/_/mysql/</a></p>
+</li>
+<li>
+<p>docker-compose.yml</p>
+</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">version</span>: <span class="string">'3.1'</span></span><br><span class="line">service<span class="variable">s:</span></span><br><span class="line">  mysq<span class="variable">l:</span></span><br><span class="line">    restar<span class="variable">t:</span> always</span><br><span class="line">    image: mysq<span class="variable">l:5</span>.<span class="number">6</span></span><br><span class="line">    container_name: mysql</span><br><span class="line">    port<span class="variable">s:</span></span><br><span class="line">      - <span class="number">3306</span>:<span class="number">3306</span></span><br><span class="line">    environmen<span class="variable">t:</span></span><br><span class="line">      TZ: Asia/Shanghai</span><br><span class="line">      MYSQL_ROOT_PASSWORD: <span class="number">123456</span></span><br><span class="line">    <span class="keyword">command</span>:</span><br><span class="line">      --character-<span class="keyword">set</span>-server=utf8mb4</span><br><span class="line">      --collation-server=utf8mb4_general_ci</span><br><span class="line">      --explicit_defaults_for_timestamp=true</span><br><span class="line">      --lower_case_table_names=<span class="number">1</span></span><br><span class="line">      --max_allowed_packet=<span class="number">128</span>M</span><br><span class="line">      --sql-<span class="keyword">mode</span>=<span class="string">"STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO"</span></span><br><span class="line">    volume<span class="variable">s:</span></span><br><span class="line">      - /usr/local/docker/mysql/mysql-dat<span class="variable">a:</span>/var/lib/mysql</span><br></pre></td></tr></table></figure>
+<h3 id="实战2：快速搭建-phpmyadmin">实战2：快速搭建 phpMyAdmin</h3>
+<ul>
+<li>
+<p>官方镜像仓库</p>
+<p><a href="https://github.com/frank-lam/fullstack-tutorial/blob/master/notes/phpmyadmin/phpmyadmin" target="_blank" rel="noopener">phpmyadmin/phpmyadmin</a></p>
+</li>
+<li>
+<p>docker-compose.yml</p>
+</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  phpmyadmin:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">phpmyadmin/phpmyadmin</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">phpmyadmin</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">PMA_ARBITRARY=1</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">PMA_HOST=120.92.17.12</span></span><br><span class="line">    <span class="comment">## - PMA_PORT=3306</span></span><br><span class="line">    <span class="comment">## - PMA_USER=xxx</span></span><br><span class="line">    <span class="comment">## - PMA_PASSWORD=xxx</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="number">6060</span><span class="string">:80</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">/sessions</span></span><br></pre></td></tr></table></figure>
+<h3 id="实战3：快速搭建-gitlab">实战3：快速搭建 GitLab</h3>
+<p>GitLab 使用163邮箱发送邮件 - 刘锐群的笔记 - CSDN博客 <a href="https://blog.csdn.net/liuruiqun/article/details/50000213" target="_blank" rel="noopener">https://blog.csdn.net/liuruiqun/article/details/50000213</a></p>
+<p>gitlab服务器邮箱配置 - weifengCorp - 博客园 <a href="https://www.cnblogs.com/weifeng1463/p/8489563.html" target="_blank" rel="noopener">https://www.cnblogs.com/weifeng1463/p/8489563.html</a></p>
+<p>twang2218/gitlab-ce-zh - Docker Hub <a href="https://hub.docker.com/r/twang2218/gitlab-ce-zh/" target="_blank" rel="noopener">https://hub.docker.com/r/twang2218/gitlab-ce-zh/</a></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">version</span>: <span class="string">'3'</span></span><br><span class="line">service<span class="variable">s:</span></span><br><span class="line">    we<span class="variable">b:</span></span><br><span class="line">      image: <span class="string">'twang2218/gitlab-ce-zh:10.5'</span></span><br><span class="line">      restar<span class="variable">t:</span> always</span><br><span class="line">      <span class="built_in">hostname</span>: <span class="string">'120.131.11.187'</span></span><br><span class="line">      environmen<span class="variable">t:</span></span><br><span class="line">        TZ: <span class="string">'Asia/Shanghai'</span></span><br><span class="line">        GITLAB_OMNIBUS_CONFIG: |</span><br><span class="line">          external_url <span class="string">'http://120.131.11.187:3000'</span></span><br><span class="line">          gitlab_rails[<span class="string">'gitlab_shell_ssh_port'</span>] = <span class="number">2222</span></span><br><span class="line">          unicorn[<span class="string">'port'</span>] = <span class="number">8888</span></span><br><span class="line">          nginx[<span class="string">'listen_port'</span>] = <span class="number">3000</span></span><br><span class="line">      port<span class="variable">s:</span></span><br><span class="line">        - <span class="string">'3000:3000'</span></span><br><span class="line">        - <span class="string">'8443:443'</span></span><br><span class="line">        - <span class="string">'2222:22'</span></span><br><span class="line">      volume<span class="variable">s:</span></span><br><span class="line">        - /usr/local/docker/gitlab/confi<span class="variable">g:</span>/etc/gitlab</span><br><span class="line">        - /usr/local/docker/gitlab/dat<span class="variable">a:</span>/var/<span class="keyword">opt</span>/gitlab</span><br><span class="line">        - /usr/local/docker/gitlab/<span class="built_in">log</span><span class="variable">s:</span>/var/<span class="built_in">log</span>/gitlab</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://my-fe.pub/post/docker-front-and-backend-separation.html#toc-619" target="_blank" rel="noopener">docker前后分离笔记 - 小翼的前端天地</a></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.frankfeekr.cn/2019/01/04/打开Docker大门/" title="打开 Docker 大门" target="_blank" rel="external">http://www.frankfeekr.cn/2019/01/04/打开Docker大门/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/frank-lam" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/avatar2.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/frank-lam" target="_blank"><span class="text-dark">Frank</span><small class="ml-1x">from zero to hero</small></a></h3>
+        <div>潜伏在黎明之前，混迹于互联网江湖。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/04/16/手把手教你，搭建搬瓦工-SS-代理/" title="手把手教你，搭建搬瓦工 SS 代理"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/12/17/手把手教你，搭建内网穿透服务/" title="手把手教你，搭建内网穿透服务"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/img/donate/alipay.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/img/donate/wechat.jpg" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/frank-lam" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/Lam_Frank" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://www.zhihu.com/people/hifrank/" target="_blank" title="Zhihu" data-toggle="tooltip" data-placement="top"><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="mailto:frank_lin@whu.edu.cn" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        
+        <div class="publishby">
+            <!-- <span id="busuanzi_container_site_pv">访问量：<span id="busuanzi_value_site_pv"></span>次</span><br/> -->
+            <!-- frank_lin@whu.edu.cn <br /> -->
+            <!-- fullstack-tutorial -->
+            <!-- <br> -->
+            <iframe style="height: 20px !important;" frameborder="0" scrolling="0" width="120px" height="20px" src="https://ghbtns.com/github-btn.html?user=frank-lam&repo=fullstack-tutorial&type=star&count=true">
+            </iframe><br>
+            <!-- <p id="about_51la">
+                <script type="text/javascript" src="//quote.51.la/q?id=19985869&mb=4"></script>
+            </p> -->
+            <p>
+                <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> </span>
+                <br>
+                <a href="https://beian.miit.gov.cn" target="_blank" style="border-bottom: 1px dashed #ffffffbf;">浙ICP备2021008991号</a>
+            </p>
+            <!-- Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>. -->
+        </div>
+    </div>
+    <script>
+        // setTimeout(function () {
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        // }, 1000);
+
+        do {
+            console.log("loading 51.la");
+        }
+        while (document.getElementById("about_51la").length == 1) {
+            setTimeout(function () {
+                $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+                $('#about_51la a').remove()
+
+            }, 500);
+            // $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+            // $('#about_51la a').remove()
+        }
+        // while ($('#about_51la').length == 1) {
+
+        // }
+
+        // setTimeout(function(){
+        //     console.log($('#about_51la').length);
+        //     if($('#about_51la p')){
+        //         alert("exist");
+        //     }
+        //     else{
+        //         alert("not exist");
+        //     }
+        //     console.log($('#about_51la span'));
+        //     $('#about_51la').prepend(`<span>${$('#about_51la a').text()}</span>`)
+        //     $('#about_51la a').remove()
+        //  }, 2000);
+
+    </script>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script async src="https://cdn.jsdelivr.net/gh/frank-lam/hexo-blog-site/js/busuanzi.pure.mini.js"></script> -->
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '321c793b57e48017d3d6',
+    clientSecret: '525a416540a4b84efca2e7cdf218edddcd7c2b00',
+    repo: 'hexo-blog-gitalk',
+    owner: 'frank-lam',
+    admin: ['frank-lam'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      if ($(this).hasClass('nofancybox')) return;
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>
